@@ -4,84 +4,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio | Your Name</title>
-  <style>
-    body { margin: 0; font-family: Arial, sans-serif; line-height: 1.6; }
-    header { background: #0d6efd; color: #fff; text-align: center; padding: 80px 20px; }
-    header h1 { font-size: 3rem; margin: 0; }
-    header p { font-size: 1.2rem; margin: 10px 0; }
-    header a { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #fff; color: #0d6efd; border-radius: 5px; text-decoration: none; }
-    section { padding: 60px 20px; max-width: 1000px; margin: auto; }
-    section h2 { text-align: center; margin-bottom: 40px; font-size: 2rem; color: #0d6efd; }
-    .skills, .projects { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-    .card { padding: 20px; border: 1px solid #ddd; border-radius: 10px; background: #fafafa; text-align: center; }
-    .card:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    footer { background: #0d6efd; color: #fff; text-align: center; padding: 20px; }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="font-sans text-gray-900">
 
   <!-- Hero Section -->
-  <header>
-    <h1>Hello, I'm <span>Your Name</span></h1>
-    <p>A passionate Web Developer creating modern & responsive designs</p>
-    <a href="#projects">See My Work</a>
+  <header class="min-h-screen flex flex-col justify-center items-center text-center bg-blue-600 text-white px-6">
+    <h1 class="text-5xl font-bold mb-4">Hello, myself <span class="text-yellow-300">shashKing</span></h1>
+    <p class="text-lg max-w-xl mb-6">I'm Chaotic neutral. And... it's too late to look away, Darling.
+</p>
+    <a href="#projects" class="px-6 py-3 bg-white text-blue-600 rounded-xl shadow hover:bg-gray-200 transition">See My Work</a>
   </header>
 
   <!-- About Section -->
-  <section id="about">
-    <h2>About Me</h2>
-    <p>
+  <section id="about" class="py-20 px-6 max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-blue-600 mb-6">About Me</h2>
+    <p class="text-gray-700 leading-relaxed">
       I’m a developer skilled in building responsive, scalable, and user-friendly applications.
       My focus is on clean code, modern technologies, and delivering impactful digital experiences.
     </p>
   </section>
 
   <!-- Skills Section -->
-  <section id="skills">
-    <h2>Skills</h2>
-    <div class="skills">
-      <div class="card">HTML</div>
-      <div class="card">CSS</div>
-      <div class="card">JavaScript</div>
-      <div class="card">Node.js</div>
-      <div class="card">Express</div>
-      <div class="card">MongoDB</div>
+  <section id="skills" class="py-20 bg-white px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-blue-600 mb-10">Skills</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+        <div class="p-4 bg-gray-100 rounded-xl shadow hover:shadow-lg transition">HTML</div>
+        <div class="p-4 bg-gray-100 rounded-xl shadow hover:shadow-lg transition">CSS</div>
+        <div class="p-4 bg-gray-100 rounded-xl shadow hover:shadow-lg transition">JavaScript</div>
+        <div class="p-4 bg-gray-100 rounded-xl shadow hover:shadow-lg transition">Node.js</div>
+        <div class="p-4 bg-gray-100 rounded-xl shadow hover:shadow-lg transition">Express</div>
+        <div class="p-4 bg-gray-100 rounded-xl shadow hover:shadow-lg transition">MongoDB</div>
+      </div>
     </div>
   </section>
 
   <!-- Projects Section -->
-  <section id="projects">
-    <h2>Projects</h2>
-    <div class="projects">
-      <div class="card">
-        <h3>Project One</h3>
-        <p>Short description of the project and technologies used.</p>
-        <a href="#">View Project</a>
-      </div>
-      <div class="card">
-        <h3>Project Two</h3>
-        <p>Short description of the project and technologies used.</p>
-        <a href="#">View Project</a>
-      </div>
-      <div class="card">
-        <h3>Project Three</h3>
-        <p>Short description of the project and technologies used.</p>
-        <a href="#">View Project</a>
+  <section id="projects" class="py-20 bg-gray-50 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-blue-600 mb-10">Projects</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
+          <h3 class="text-xl font-semibold mb-3">Project One</h3>
+          <p class="text-gray-600 mb-4">Short description of the project and technologies used.</p>
+          <a href="tinyurl.com/392ak9jb" class="text-blue-600 hover:underline">View Project →</a>
+        </div>
+        <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
+          <h3 class="text-xl font-semibold mb-3">Project Two</h3>
+          <p class="text-gray-600 mb-4">Short description of the project and technologies used.</p>
+          <a href="https//:tinyurl.com/392ak9jb" class="text-blue-600 hover:underline">View Project →</a>
+        </div>
+        <div class="p-6 bg-white rounded-xl shadow hover:shadow-lg transition">
+          <h3 class="text-xl font-semibold mb-3">Project Three</h3>
+          <p class="text-gray-600 mb-4">Short description of the project and technologies used.</p>
+          <a href="https//:tinyurl.com/392ak9jb" class="text-blue-600 hover:underline">View Project →</a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Contact Section -->
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:yourname@example.com">yourname@example.com</a></p>
-    <p>LinkedIn: <a href="#">linkedin.com/in/yourname</a></p>
-    <p>GitHub: <a href="#">github.com/yourname</a></p>
+  <section id="contact" class="py-20 px-6 text-center">
+    <h2 class="text-3xl font-bold text-blue-600 mb-6">Contact</h2>
+    <p class="mb-2">📧 Email: <a href="mailto:shashaankinbox@gmail.com" class="text-blue-600 hover:underline">shashaankinbox@gmail.com</a></p>
+    <p class="mb-2">💼 LinkedIn: <a href="https://www.linkedin.com/in/shashking/" class="text-blue-600 hover:underline">https://www.linkedin.com/in/shashking/</a></p>
+    <p>👨‍💻 Insta: <a href="https://www.instagram.com/shashking/" class="text-blue-600 hover:underline">https://www.instagram.com/shashking/</a></p>
   </section>
 
   <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Your Name. All Rights Reserved.</p>
+  <footer class="bg-blue-600 text-white text-center py-6">
+    <p>&copy; 2025 shashKing. All Rights Reserved.</p>
   </footer>
 
 </body>
