@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Business Enquiries</title>
+
+    <link rel="stylesheet" href="css/art-style.css">
+
+    <!-- GSAP for card animations and smooth scroll -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+</head>
+
+
+<body>
+
+
+    <!-- ====================================== -->
+    <!-- SECTION: CATEGORY SELECTION CARDS -->
+    <!-- ====================================== -->
+
+    <section class="section">
+
+        <h2 class="section-title">Business Enquiries</h2>
+
+        <div class="cards">
+
+            <div class="card" data-type="art">
+                <img src="https://picsum.photos/id/1015/800/600">
+                <div class="card-title">Art Inquiry</div>
+                <p class="card-desc">Commission custom artwork</p>
+            </div>
+
+            <div class="card" data-type="event">
+                <img src="https://picsum.photos/id/1022/800/600">
+                <div class="card-title">Event Appearance</div>
+                <p class="card-desc">Invite for exhibitions and events</p>
+            </div>
+
+            <div class="card" data-type="brand">
+                <img src="https://picsum.photos/id/1035/800/600">
+                <div class="card-title">Brand Collaboration</div>
+                <p class="card-desc">Campaigns and partnerships</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ====================================== -->
+    <!-- SECTION: FORM -->
+    <!-- ====================================== -->
+
+    <section id="formSection" class="section" style="display:none">
+
+        <h2 class="section-title">Inquiry Form</h2>
+
+        <form id="inquiryForm">
+
+
+            <!-- ============================= -->
+            <!-- ART INQUIRY FLOW -->
+            <!-- ============================= -->
+
+            <div id="artForm" class="formFlow" style="display:none">
+                <div class="flow">
+                    <label>Canvas Size</label>
+                    <select id="canvasSize">
+                        <option value="">Select Canvas Size</option>
+                        <option>16x20</option>
+                        <option>18x24</option>
+                        <option>24x36</option>
+                        <option>36x48</option>
+                    </select>
+
+
+                    <label>Medium</label>
+                    <select id="medium">
+                        <option>Acrylic</option>
+                        <option>Oil</option>
+                        <option>Watercolor</option>
+                    </select>
+
+
+                    <label>Purpose</label>
+                    <select id="purpose">
+                        <option>Personal</option>
+                        <option>Home Decor</option>
+                        <option>Gift</option>
+                    </select>
+
+
+                    <!-- Gift conditional fields -->
+                    <div id="giftFields" style="display:none">
+
+                        <input id="recipientName" placeholder="Recipient Name">
+                        <input id="relation" placeholder="Relation">
+                        <input id="occasion" placeholder="Occasion">
+
+                    </div>
+
+
+                    <label>Deadline</label>
+                    <input type="date" id="deadline">
+
+
+                    <label>Delivery</label>
+                    <select id="delivery">
+                        <option>Pickup</option>
+                        <option>Local Delivery</option>
+                        <option>Shipping</option>
+                    </select>
+
+
+                    <label>Budget</label>
+                    <select id="budget">
+                        <option>₹5k-10k</option>
+                        <option>₹10k-25k</option>
+                        <option>₹25k+</option>
+                        <option>Open to quote</option>
+                    </select>
+
+
+                    <label>Artwork Idea</label>
+
+                    <textarea id="artDetails" class="textarea-large"
+                        placeholder="Describe the artwork idea, colors, theme, references etc."></textarea>
+
+
+
+                    <!-- Price Preview -->
+
+                    <div class="price-box">
+
+                        Estimated Price
+
+                        <h3 id="pricePreview">₹0</h3>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- ============================= -->
+            <!-- EVENT APPEARANCE FLOW -->
+            <!-- ============================= -->
+
+            <div id="eventForm" class="formFlow" style="display:none">
+                <div class="flow">
+                    <label>Event Date</label>
+                    <input type="date" id="eventDate">
+
+                    <label>Location</label>
+                    <input id="eventLocation" placeholder="City / Venue">
+
+
+                    <label>Budget</label>
+                    <select id="eventBudget">
+
+                        <option value="">Select Budget</option>
+                        <option>₹50k – ₹1L</option>
+                        <option>₹1L – ₹3L</option>
+                        <option>₹3L – ₹10L</option>
+                        <option>₹10L+</option>
+                        <option>Discuss</option>
+
+                    </select>
+
+
+                    <label>Event Details</label>
+
+                    <textarea id="eventDetails" class="textarea-large"
+                        placeholder="Describe the event, audience size, expectations, role etc."></textarea>
+                </div>
+            </div>
+
+
+
+            <!-- ============================= -->
+            <!-- BRAND COLLAB FLOW -->
+            <!-- ============================= -->
+
+            <div id="brandForm" class="formFlow" style="display:none">
+
+                <label>Campaign / Product</label>
+                <input id="campaignName" placeholder="Campaign or product name">
+
+
+                <label>Budget</label>
+                <select id="brandBudget">
+
+                    <option value="">Select Budget</option>
+                    <option>₹1L – ₹3L</option>
+                    <option>₹3L – ₹10L</option>
+                    <option>₹10L – ₹25L</option>
+                    <option>₹25L+</option>
+
+                </select>
+
+
+                <label>Campaign Description</label>
+
+                <textarea id="brandDetails" class="textarea-large"
+                    placeholder="Describe the campaign, deliverables, platforms, timelines etc."></textarea>
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- CLIENT INFORMATION -->
+            <!-- ============================= -->
+            <div class="flow">
+                <h2 class="section-title">Your information</h2>
+                <input id="name" placeholder="Name" required>
+                <input id="phone" placeholder="Phone" required>
+                <input id="email" placeholder="Email">
+                <input id="company" placeholder="Company / Organization">
+
+                <!-- Auto filled by card selection -->
+                <input id="inquiryType" readonly>
+
+            </div>
+
+            <!-- ============================= -->
+            <!-- SUBMIT -->
+            <!-- ============================= -->
+
+            <button type="button" onclick="sendToWhatsApp()">
+                Send Inquiry
+            </button>
+
+        </form>
+
+    </section>
+
+
+
+    <!-- Back To Top -->
+    <button id="backToTop">↑</button>
+
+
+    <script src="js/art-script.js"></script>
+
+</body>
+
+</html>
