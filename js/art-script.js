@@ -6,7 +6,7 @@ Central configuration so marketing team can
 change WhatsApp number without touching code.
 */
 
-const whatsappNumber = "9799455100"
+const whatsappNumber = "9999999999"
 
 
 
