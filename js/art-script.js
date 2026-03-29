@@ -213,6 +213,20 @@ loadForm(activeFlow)
 
 updatePricePreview()
 
+
+//=========================================
+//SMOOTH SCROLL TO FORM
+
+gsap.to(window,{
+duration:0.8,
+scrollTo:{
+y:formSection,
+offsetY:40
+},
+ease:"power2.out"
+})
+
+
 }
 
 
