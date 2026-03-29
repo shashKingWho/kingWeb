@@ -11,7 +11,7 @@ const whatsappNumber = "9999999999"
 
 
 /* =========================================
-CARD BEHAVIOR (GSAP FLEX HOVER)
+CARD BEHAVIOR (DESKTOP + MOBILE SUPPORT)
 ========================================= */
 
 const cards = document.querySelectorAll(".card")
@@ -20,38 +20,83 @@ let activeCard = null
 
 cards.forEach(card => {
 
+const img = card.querySelector("img")
+const desc = card.querySelector(".card-desc")
+
+
+/* -------------------------
+DESKTOP HOVER
+------------------------- */
+
 card.addEventListener("mouseenter", () => {
 
 if(window.innerWidth > 768){
 
 gsap.to(card,{flex:3,duration:.4})
-gsap.to(card.querySelector("img"),{scale:1.2,filter:"grayscale(0%)"})
-gsap.to(card.querySelector(".card-desc"),{y:0})
+gsap.to(img,{scale:1.2,filter:"grayscale(0%)"})
+gsap.to(desc,{y:0})
 
 }
 
 })
+
 
 card.addEventListener("mouseleave", () => {
 
 if(window.innerWidth > 768){
 
-gsap.to(card,{flex:1})
-gsap.to(card.querySelector("img"),{scale:1,filter:"grayscale(100%)"})
-gsap.to(card.querySelector(".card-desc"),{y:"100%"})
+gsap.to(card,{flex:1,duration:.4})
+gsap.to(img,{scale:1,filter:"grayscale(100%)"})
+gsap.to(desc,{y:"100%"})
 
 }
 
 })
 
+
+/* -------------------------
+MOBILE TAP
+------------------------- */
+
 card.addEventListener("click", () => {
 
 if(window.innerWidth <= 768){
 
-if(activeCard !== card){
+/* reset all cards */
 
-gsap.to(cards,{flex:1})
-gsap.to(card,{flex:3})
+cards.forEach(c => {
+
+gsap.to(c,{flex:1,duration:.4})
+
+gsap.to(c.querySelector("img"),{
+scale:1,
+filter:"grayscale(100%)"
+})
+
+gsap.to(c.querySelector(".card-desc"),{
+y:"100%"
+})
+
+})
+
+
+/* expand selected */
+
+gsap.to(card,{flex:3,duration:.4})
+
+gsap.to(img,{
+scale:1.1,
+filter:"grayscale(0%)"
+})
+
+gsap.to(desc,{
+y:0
+})
+
+
+/* first tap expands only */
+
+if(activeCard !== card){
 
 activeCard = card
 return
@@ -60,13 +105,14 @@ return
 
 }
 
+
+/* second tap opens form */
+
 openForm(card.dataset.type)
 
 })
 
 })
-
-
 
 // FORM
 
