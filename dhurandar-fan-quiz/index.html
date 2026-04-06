@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dhurandhar Quiz by shashKing</title>
+  <meta name="title" content="Dhurandhar: The Ultimate Quiz | Created by ShashKing">
+  <meta name="description"
+    content="Mission: Prove your intel is correct. An immersive, high-stakes quiz experience for Dhurandhar fans. Developed by Intel Coordinator ShashKing.">
+  <meta name="author" content="ShashKing">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://your-link.com/">
+  <meta property="og:title" content="Dhurandhar: The Ultimate Quiz">
+  <meta property="og:description"
+    content="Are you a true Dhurandhar fan? Test your intel in this classified mission by ShashKing.">
+  <meta property="og:image" content="assets/shashKing_creator_400x400.jpg">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="Dhurandhar: The Ultimate Quiz">
+  <meta property="twitter:description" content="Mission coordinated by ShashKing. Test your movie knowledge.">
+  <meta property="twitter:image" content="assets/shashKing_creator_400x400.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,300;0,600;1,300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Quiz",
+  "name": "Dhurandhar: The Ultimate Quiz",
+  "hasPart": {
+    "@type": "CreativeWork",
+    "author": {
+      "@type": "Person",
+      "name": "ShashKing",
+      "jobTitle": "Intel Coordinator",
+      "url": "https://your-portfolio-or-social-link.com"
+    }
+  },
+  "educationalAlignment": "Entertainment",
+  "interactivityType": "active",
+  "description": "A high-fidelity interactive quiz based on the movie Dhurandhar.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "INDIE CORE LOGIC"
+  }
+}
+</script>
+</head>
+
+<body>
+
+  <!-- ── GRAIN OVERLAY ── -->
+  <canvas id="grain" aria-hidden="true"></canvas>
+
+  <!-- ── INTRO TITLE SCREEN ── -->
+  <section class="intro-screen" id="intro">
+    <div class="intro__bg-grid" aria-hidden="true"></div>
+    <div class="intro__content">
+      <p class="intro__creator">INTEL COORDINATOR // SHASHKING</p>
+      <p class="intro__stamp">CLASSIFIED // FOR YOUR EYES ONLY</p>
+      <h1 class="intro__title js-classified">Dhurandhar FAN QUIZ</h1>
+      <p class="intro__subtitle js-classified">The Ultimate Quiz</p>
+      <p class="intro__body js-classified">Dhurandhar has taken over Social Media.<br>Let's see if you've actually seen
+        this movie 4 times.</p>
+      <button class="intro__cta" id="startBtn">BEGIN MISSION</button>
+      <p class="intro__body js-classified">Mission: Prove your intel is correct.</p>
+
+    </div>
+    <div class="intro__scroll-hint" aria-hidden="true">
+      <span>SCROLL DOWN</span>
+      <div class="intro__scroll-line"></div>
+    </div>
+    <img src="assets/shashKing_creator_400x400.jpg" alt="Shashaank" class="creator-watermark" />
+  </section>
+
+  <!-- ── HORIZONTAL STORY ── -->
+  <main class="story" id="storySection" aria-label="Quiz panels">
+    <div class="story__track" id="storyTrack">
+      <!-- panels injected by JS -->
+    </div>
+  </main>
+
+
+
+
+
+  <!-- ── RESULT OUTRO ── -->
+  <section class="outro" id="outro" aria-hidden="true">
+    <div class="outro__inner">
+
+      <p class="outro__label">MISSION DEBRIEF</p>
+      <div class="finish-wrapper">
+        <button class="panel__cta finish-btn" id="finishBtn">
+          CHECK MY SCORE →
+        </button>
+      </div>
+
+      <div class="outro__score-display">
+        <span class="outro__score-num" id="outroScore">—</span>
+        <span class="outro__score-denom" id="outroTotal"></span>
+      </div>
+      <p class="outro__verdict" id="outroVerdict"></p>
+      <!-- <button class="outro__retry" onclick="location.reload()">RETRY MISSION</button> -->
+      <button class="outro__retry" id="mag1" onclick="resetExperience()">RETRY MISSION</button>
+
+    </div>
+  </section>
+
+
+
+
+  <script src="gsap.min.js"></script>
+  <script src="ScrollTrigger.min.js"></script>
+  
+  <script defer type="module" src="script.js"></script>
+
+</body>
+
+</html>

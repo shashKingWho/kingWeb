@@ -1,0 +1,651 @@
+/* ===================================== */
+/* RESET + BASE */
+/* ===================================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; }
+img { display: block; max-width: none; }
+
+/* ===================================== */
+/* TOKENS */
+/* ===================================== */
+:root {
+  --ink:        #0a0a0a;
+  --paper:      #111010;
+  --amber:      #e8a020;
+  --amber-dim:  #c47a10;
+  --amber-glow: rgba(232, 160, 32, 0.18);
+  --red:        #c0392b;
+  --white:      #f0ede8;
+  --muted:      rgba(240,237,232,0.55);
+  --border:     rgba(240,237,232,0.12);
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+  --font-body:    'IBM Plex Sans', sans-serif;
+
+  --gutter: clamp(1.5rem, 4vw, 3.5rem);
+  --panel-v: clamp(3rem, 7vh, 5rem);
+}
+
+/* ===================================== */
+/* BODY */
+/* ===================================== */
+body {
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+html, body {
+  /* Remove position: fixed! It kills all scrolling. */
+  position: relative; 
+  /* Allow the body to be tall enough to scroll through all questions */
+  height: auto; 
+  min-height: 100%;
+  /* Must be auto or visible for ScrollTrigger to work */
+  overflow-y: auto; 
+  overflow-x: hidden;
+}
+
+#storySection {
+  width: 100%;
+  /* This must be enough for all your panels. 
+     If you have 5 panels at 1.4 pace, 500vh is okay, 
+     but let's ensure it's not being collapsed. */
+  height: 600vh !important; 
+  position: relative;
+  display: block; /* Ensure it's not flex */
+}
+
+/* ===================================== */
+/* GRAIN CANVAS */
+/* ===================================== */
+#grain {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+}
+
+/* ===================================== */
+/* INTRO SCREEN */
+/* ===================================== */
+.intro-screen {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.intro__bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+}
+
+.intro__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 720px;
+  padding: var(--gutter);
+  /* Added this to prevent text jumping */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intro__stamp {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  color: var(--red);
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.intro__title {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 15vw, 11rem);
+  line-height: 0.9;
+  color: var(--amber);
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 80px rgba(232,160,32,0.3);
+}
+
+.intro__subtitle {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+}
+
+.intro__body {
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 1.5rem;
+  line-height: 1.7;
+}
+
+.intro__cta {
+  margin-top: 2.5rem;
+  background: none;
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  padding: 0.85rem 2rem;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+}
+.intro__cta:hover {
+  background: var(--amber);
+  color: var(--ink);
+}
+
+.intro__scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  opacity: 0;
+  animation: fadeIn 1s 2s forwards;
+}
+.intro__scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--amber), transparent);
+  animation: scrollPulse 2s 2s infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(1.15); }
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* ===================================== */
+/* STORY — HORIZONTAL CONTAINER */
+/* ===================================== */
+.story {
+  position: sticky; /* Change from relative to sticky */
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.story__track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+/* ===================================== */
+/* PANEL */
+/* ===================================== */
+.panel {
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+
+  display: flex;          /* ADD THIS */
+  justify-content: center; /* ADD THIS - Centers horizontally */
+  align-items: center;     /* ADD THIS - Centers vertically */
+
+}
+
+/* ── Background layer ── */
+.panel__background {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.panel__background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.55) 100%);
+  z-index: 2;
+}
+/* Ensure the background image is larger than the container for parallax */
+.panel__bg-texture {
+  position: absolute;
+  inset: -15%; /* CRITICAL: Gives the image 30% extra space to move */
+  z-index: 1;
+  will-change: transform;
+}
+.panel__bg-texture img {
+  /* width: 100%; */
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Scanlines ── */
+.panel__scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0,0,0,0.08) 3px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+}
+
+
+/* ── Chapter prop (giant number) ── */
+.panel__chapter-prop {
+  position: absolute;
+  right: -0.05em;
+  bottom: -0.15em;
+  z-index: 2;
+  font-family: var(--font-display);
+  font-size: clamp(18rem, 35vw, 38rem);
+  line-height: 1;
+  color: transparent;
+  
+  /* UPDATED STROKE WEIGHT AND OPACITY */
+  -webkit-text-stroke: 3px rgba(240, 237, 232, 0.15); 
+  
+  pointer-events: none;
+  will-change: transform;
+  user-select: none;
+}
+
+/* ── Content layer ── */
+.panel__content {
+  position: relative;
+  z-index: 4;
+  /* Remove height: 100% so it doesn't stretch and ignore flex alignment */
+  width: 90%;
+  max-width: 850px;
+  
+  /* Add a large left padding to push it "right-ish" if desired */
+  /* Or keep it balanced with var(--gutter) */
+  padding: 0 var(--gutter); 
+  
+  text-align: left;
+  will-change: transform, opacity;
+}
+
+.panel__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  color: var(--amber);
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  opacity: 0.9;
+}
+
+.panel__question {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  line-height: 1.05;
+  color: var(--white);
+  letter-spacing: 0.01em;
+  margin-bottom: 2rem;
+}
+
+/* ── Options ── */
+.panel__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;          /* STRETCH OPTIONS WITHIN THE CENTERED BOX */
+  max-width: 500px;     /* BUT DON'T LET THEM GET TOO WIDE */
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(240,237,232,0.04);
+  border: 1px solid var(--border);
+  padding: 0.75rem 1.1rem;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: clamp(0.78rem, 1.2vw, 0.92rem);
+  color: var(--muted);
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+  opacity: 0;
+  transform: translateY(8px);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+.option-item::before {
+  content: attr(data-letter);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--amber-dim);
+  min-width: 1.4em;
+  flex-shrink: 0;
+}
+.option-item:hover {
+  background: var(--yellow);
+  border-color: var(--amber);
+  color: var(--white);
+}
+/* While picking: Yellow */
+.option-item.selected {
+  background: var(--amber-glow) !important;
+  border-color: var(--amber) !important;
+  color: var(--white) !important;
+}
+
+/* After clicking "Check Score": Result Colors */
+.option-item.correct {
+  background: rgba(39,174,96,0.18) !important;
+  border-color: #27ae60 !important;
+  color: #2ecc71 !important;
+}
+
+.option-item.wrong {
+  background: rgba(192,57,43,0.18) !important;
+  border-color: var(--red) !important;
+  color: #e74c3c !important;
+}
+
+/* hidden radio */
+.option-item input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Progress bar (top of panel) ── */
+.panel__progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px; /* increase thickness FROM 2px; */
+  z-index: 10;
+  background: rgba(240,237,232,0.06);
+}
+.panel__progress-fill {
+  height: 100%;
+  background: var(--amber);
+  transform-origin: left;
+  transform: scaleX(0);
+
+  box-shadow:
+    0 0 8px rgba(232,160,32,0.6),
+    0 0 16px rgba(232,160,32,0.3);
+  transform-origin: left;
+}
+
+/* ── Side label ── */
+.panel__side-label {
+  position: absolute;
+  right: var(--gutter);
+  top: 50%;
+  transform: translateY(-50%) rotate(-90deg);
+  transform-origin: center;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: rgba(240,237,232,0.15);
+  z-index: 5;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+
+/* ── Classified lines (from classified.js) ── */
+.classified-line {
+  position: relative;
+  display: inline-block; /* Changed from block to fit text tightly */
+  overflow: hidden;
+  vertical-align: top;
+}
+
+.classified-line__inner {
+  display: block;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.classified-line__mask {
+  position: absolute;
+  inset: 0;
+  background: var(--ink); /* This is your redacted black bar */
+  z-index: 2;
+  will-change: transform;
+  transform-origin: right center;
+  transform: scaleX(1); /* Starts fully covering the text */
+}
+
+
+
+
+/* //================================= */
+.finish-wrapper {
+  position: relative;
+  text-align: center;
+  margin: 4rem 0;
+}
+
+.finish-btn {
+  font-size: 1.2rem;
+  padding: 1rem 2.5rem;
+  border: 2px solid #ff3b3b;
+  color: #ff3b3b;
+  background: transparent;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* glowing pulse */
+.finish-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 59, 59, 0.15);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.finish-btn:hover {
+  background: #ff3b3b;
+  color: #000;
+  box-shadow: 0 0 20px rgba(255, 59, 59, 0.6);
+}
+
+.finish-btn:hover::after {
+  opacity: 1;
+}
+
+/* subtle urgency animation */
+@keyframes pulseBorder {
+  0%, 100% { box-shadow: 0 0 0px rgba(255,59,59,0.3); }
+  50% { box-shadow: 0 0 12px rgba(255,59,59,0.7); }
+}
+
+.finish-btn {
+  animation: pulseBorder 2s infinite;
+}
+
+
+/* ===================================== */
+/* OUTRO */
+/* ===================================== */
+.outro {
+  min-height: 100svh;
+  background: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.outro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 100%);
+}
+
+.outro__inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: var(--gutter);
+}
+
+.outro__label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--red);
+  margin-bottom: 2rem;
+}
+
+.outro__score-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.2em;
+  margin-bottom: 1.5rem;
+}
+.outro__score-num {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 18vw, 12rem);
+  color: var(--amber);
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(232,160,32,0.35);
+}
+.outro__score-denom {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: var(--muted);
+  line-height: 1;
+}
+
+.outro__verdict {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  color: var(--muted);
+  max-width: 38rem;
+  margin: 0 auto 2.5rem;
+  line-height: 1.7;
+}
+
+.outro__retry {
+  background: none;
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  padding: 0.8rem 2rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+
+  transform: translateY(20px);
+  pointer-events: none;
+  opacity: 0;
+
+}
+
+.outro__retry:hover { background: var(--amber); color: var(--ink); }
+
+
+
+
+/* Creator Name in Intro */
+.intro__creator {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  color: var(--amber-dim);
+  margin-bottom: 0.5rem;
+  opacity: 0.86;
+}
+
+/* Fixed Watermark */
+.creator-watermark {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 100px; /* Adjust based on your image size */
+  height: auto;
+  z-index: 1000;
+  opacity: 0.3;
+  pointer-events: none;
+  /* filter: grayscale(1) brightness(1.5); */
+  mix-blend-mode: screen;
+}
+
+/* ===================================== */
+/* RESPONSIVE */
+/* ===================================== */
+@media (max-width: 768px) {
+  .panel__content {
+    padding-left: var(--gutter);
+    max-width: 100%;
+    justify-content: flex-end;
+    padding-bottom: 10vh;
+  }
+  .panel__chapter-prop {
+    font-size: 55vw;
+    opacity: 0.5;
+  }
+  .panel__side-label { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel__bg-texture,
+  .panel__chapter-prop,
+  .classified-line__inner,
+  .classified-line__mask,
+  .option-item { transform: none !important; opacity: 1 !important; }
+}
