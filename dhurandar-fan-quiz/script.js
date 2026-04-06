@@ -163,43 +163,33 @@ function buildClassifiedLines(element) {
    GSAP INIT 
 ───────────────────────────────────────── */
 window.addEventListener('load', () => {
-  gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger);
 
-  // Note: We REMOVED the duplicate buildClassifiedLines call here 
-  // because initIntroAnimation() handles it below.
+    // Force focus so the iframe captures keyboard/scroll events immediately
+    window.focus();
 
-  // Force focus so the iframe captures keyboard/scroll events immediately
-  window.focus();
+    /* ── SCROLL TO STORY ── */
+    const target = document.getElementById('storySection');
+    if (target) {
+        const targetPosition = target.offsetTop;
+        
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+    }
 
- 
-/* ── SCROLL TO STORY ── */
-const target = document.getElementById('storySection');
-  if (target) {
-    const targetPosition = target.offsetTop;
-    
-    window.scrollTo({
-      top: targetPosition,
-      behavior: 'smooth'
-    });
+    // Move these OUTSIDE the 'if (target)' block so they 
+    // run even if the storySection isn't found.
+    initHorizontalStory();
+    initIntroAnimation();
 
-    // CRITICAL: Tell ScrollTrigger to recount the page height 
-    // after the smooth scroll starts
+    // CRITICAL: Refresh ScrollTrigger after a delay to account for 
+    // layout shifts, images loading, or itch.io iframe lag.
     setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
-  }
-});
-
-
-
-  
-  initHorizontalStory();
-  initIntroAnimation();
-
-  // NEW: Force a refresh after 500ms to account for itch.io loading lag
-  setTimeout(() => {
-    ScrollTrigger.refresh();
-  }, 500);
+        ScrollTrigger.refresh();
+        console.log("ScrollTrigger refreshed");
+    }, 500);
 });
 
 
