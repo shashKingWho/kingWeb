@@ -1,3 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;700&display=swap');
@@ -11,7 +18,13 @@
     --tile: 18vmin;
   }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
   .bh-page {
     background: var(--cream);
@@ -21,19 +34,43 @@
 
   /* ── NAV ── */
   .bh-nav {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2.5rem; height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 60px;
     background: var(--b4);
     border-bottom: 4px solid var(--b1);
   }
+
   .bh-nav .logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px; letter-spacing: 0.12em; color: var(--cream);
+    font-size: 28px;
+    letter-spacing: 0.12em;
+    color: var(--cream);
   }
-  .bh-nav .logo span { color: var(--b2); }
-  .bh-nav ul { display: flex; gap: 2rem; list-style: none; }
-  .bh-nav a { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: #aaa; text-decoration: none; }
-  .bh-nav a:hover { color: var(--b2); }
+
+  .bh-nav .logo span {
+    color: var(--b2);
+  }
+
+  .bh-nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .bh-nav a {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #aaa;
+    text-decoration: none;
+  }
+
+  .bh-nav a:hover {
+    color: var(--b2);
+  }
 
   /* ── HERO ── */
   .bh-hero {
@@ -42,45 +79,69 @@
     min-height: 88vh;
     overflow: hidden;
   }
+
   .bh-hero-left {
     background: var(--cream);
-    display: flex; flex-direction: column; justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: 4rem 3rem;
     border-right: 6px solid var(--b4);
     position: relative;
   }
+
   .bh-hero-left h1 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(48px, 8vw, 96px);
-    line-height: 0.95; letter-spacing: 0.05em;
+    line-height: 0.95;
+    letter-spacing: 0.05em;
     color: var(--b4);
     margin-bottom: 1.5rem;
   }
-  .bh-hero-left h1 em { font-style: normal; color: var(--b1); }
+
+  .bh-hero-left h1 em {
+    font-style: normal;
+    color: var(--b1);
+  }
+
   .bh-hero-left p {
-    font-size: 15px; line-height: 1.7; max-width: 340px;
-    color: #444; margin-bottom: 2rem;
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 400px;
+    color: #444;
+    margin-bottom: 2rem;
     border-left: 4px solid var(--b3);
     padding-left: 1rem;
   }
+
   .bh-cta {
     display: inline-block;
-    background: var(--b4); color: var(--cream);
+    background: var(--b4);
+    color: var(--cream);
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px; letter-spacing: 0.15em;
+    font-size: 18px;
+    letter-spacing: 0.15em;
     padding: 12px 32px;
     text-decoration: none;
-    border: none; cursor: pointer;
+    border: none;
+    cursor: pointer;
     width: fit-content;
   }
-  .bh-cta:hover { background: var(--b3); }
+
+  .bh-cta:hover {
+    background: var(--b3);
+  }
 
   .bh-hero-right {
     background: var(--b4);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+
+    grid-template-rows: repeat(auto-fill, 1fr);
     overflow: hidden;
+    /* This crops any partial tiles at the bottom */
+    align-content: start;
+    height: 100%;    /* Matches the parent .bh-hero height */
   }
 
   /* tiles on the right hero panel */
@@ -90,196 +151,546 @@
     grid-template-columns: repeat(2, 1fr);
     overflow: hidden;
   }
+
   .tile span {
     display: grid;
     aspect-ratio: 1;
   }
-  .tile span::before, .tile span::after {
-    content: ''; grid-row: 1; grid-column: 1;
+
+  .tile span::before,
+  .tile span::after {
+    content: '';
+    grid-row: 1;
+    grid-column: 1;
   }
 
   /* digit styles — inlined */
-  [data-digit="0"] span:nth-child(1){border-radius:100% 0 0 0;background:currentColor}
-  [data-digit="0"] span:nth-child(2){background:repeating-radial-gradient(circle at 0% 100%,currentColor,currentColor 5.42%,transparent 5.42%,transparent 10.85%);border-radius:0 100% 0 0}
-  [data-digit="0"] span:nth-child(3){background-image:repeating-linear-gradient(90deg,currentColor 0%,currentColor 50%,transparent 50%,transparent 100%);background-size:15.42% 15.42%}
-  [data-digit="0"] span:nth-child(4){background:var(--b2)}
-  [data-digit="0"] span:nth-child(5){background:var(--b1);border-radius:0 0 0 100%}
-  [data-digit="0"] span:nth-child(6){background:var(--b3);border-radius:0 0 100% 0}
+  [data-digit="0"] span:nth-child(1) {
+    border-radius: 100% 0 0 0;
+    background: currentColor
+  }
 
-  [data-digit="1"] span:nth-child(1){border-radius:100% 0 0 0;background:currentColor}
-  [data-digit="1"] span:nth-child(2){background:var(--b1)}
-  [data-digit="1"] span:nth-child(4){background:var(--b3)}
-  [data-digit="1"] span:nth-child(6){background:var(--b2)}
+  [data-digit="0"] span:nth-child(2) {
+    background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%);
+    border-radius: 0 100% 0 0
+  }
 
-  [data-digit="2"] span:nth-child(1){border-radius:100% 0 0 0;background:var(--b1)}
-  [data-digit="2"] span:nth-child(2){background:repeating-radial-gradient(circle at 0% 100%,currentColor,currentColor 5.42%,transparent 5.42%,transparent 10.85%);border-radius:0 100% 0 0}
-  [data-digit="2"] span:nth-child(4){background:var(--b2);border-radius:0 0 100% 0}
-  [data-digit="2"] span:nth-child(5){background:var(--b3)}
-  [data-digit="2"] span:nth-child(6){background-image:repeating-linear-gradient(180deg,currentColor 0%,currentColor 50%,transparent 50%,transparent 100%);background-size:15.42% 15.42%}
+  [data-digit="0"] span:nth-child(3) {
+    background-image: repeating-linear-gradient(90deg, currentColor 0%, currentColor 50%, transparent 50%, transparent 100%);
+    background-size: 15.42% 15.42%
+  }
 
-  [data-digit="3"] span:nth-child(1){border-radius:100% 0 0 0;background:var(--b2)}
-  [data-digit="3"] span:nth-child(2){background:currentColor;border-radius:0 100% 0 0}
-  [data-digit="3"] span:nth-child(4)::before{background:repeating-radial-gradient(circle at 0% 100%,currentColor,currentColor 5.42%,transparent 5.42%,transparent 10.85%);border-radius:0 100% 0 0}
-  [data-digit="3"] span:nth-child(4)::after{background:repeating-radial-gradient(circle at 0% 0%,currentColor,currentColor 5.42%,transparent 5.42%,transparent 10.85%);border-radius:0 0 100% 0}
-  [data-digit="3"] span:nth-child(5){background:var(--b3);border-radius:0 0 0 100%}
-  [data-digit="3"] span:nth-child(6){background:var(--b1);border-radius:0 0 100% 0}
+  [data-digit="0"] span:nth-child(4) {
+    background: var(--b2)
+  }
 
-  [data-digit="4"] span:nth-child(1){border-radius:0 100% 0 0;background:var(--b2)}
-  [data-digit="4"] span:nth-child(2){background-image:repeating-linear-gradient(90deg,currentColor 0%,currentColor 50%,transparent 50%,transparent 100%);background-size:15.42% 15.42%}
-  [data-digit="4"] span:nth-child(3){border-radius:0 0 0 100%;background:currentColor}
-  [data-digit="4"] span:nth-child(4){background:var(--b3)}
-  [data-digit="4"] span:nth-child(6){background:var(--b1)}
+  [data-digit="0"] span:nth-child(5) {
+    background: var(--b1);
+    border-radius: 0 0 0 100%
+  }
 
-  [data-digit="5"] span:nth-child(1){background:var(--b3)}
-  [data-digit="5"] span:nth-child(2){border-radius:0 0 100% 0;background:currentColor}
-  [data-digit="5"] span:nth-child(4){background:repeating-radial-gradient(circle at 0% 100%,currentColor,currentColor 5.42%,transparent 5.42%,transparent 10.85%);border-radius:0 100% 0 0}
-  [data-digit="5"] span:nth-child(5){border-radius:0 0 0 100%;background:var(--b2)}
-  [data-digit="5"] span:nth-child(6){border-radius:0 0 100% 0;background:var(--b1)}
+  [data-digit="0"] span:nth-child(6) {
+    background: var(--b3);
+    border-radius: 0 0 100% 0
+  }
 
-  [data-digit="6"] span:nth-child(1){border-radius:100% 0 0 0;background:currentColor}
-  [data-digit="6"] span:nth-child(2){border-radius:0 100% 0 0;background:var(--b2)}
-  [data-digit="6"] span:nth-child(3){background:var(--b3)}
-  [data-digit="6"] span:nth-child(4){background:repeating-radial-gradient(circle at 0% 100%,currentColor,currentColor 5.42%,transparent 5.42%,transparent 10.85%);border-radius:0 100% 0 0}
-  [data-digit="6"] span:nth-child(5){border-radius:0 0 0 100%;background:var(--b2)}
-  [data-digit="6"] span:nth-child(6){border-radius:0 0 100% 0;background:var(--b1)}
+  [data-digit="1"] span:nth-child(1) {
+    border-radius: 100% 0 0 0;
+    background: currentColor
+  }
 
-  [data-digit="7"] span:nth-child(1){background:var(--b2)}
-  [data-digit="7"] span:nth-child(2){border-radius:0 100% 0 0;background:var(--b1)}
-  [data-digit="7"] span:nth-child(4){background:var(--b3)}
-  [data-digit="7"] span:nth-child(6){background:currentColor}
+  [data-digit="1"] span:nth-child(2) {
+    background: var(--b1)
+  }
 
-  [data-digit="8"] span:nth-child(1){border-radius:100% 0 0 0;background:var(--b2)}
-  [data-digit="8"] span:nth-child(2){border-radius:0 100% 0 0;background:var(--b3)}
-  [data-digit="8"] span:nth-child(3)::before{border-radius:100% 0 0 0;background:var(--b3)}
-  [data-digit="8"] span:nth-child(3)::after{background:repeating-radial-gradient(circle at 100% 0%,currentColor,currentColor 5.42%,transparent 5.42%,transparent 10.85%);border-radius:0 0 0 100%}
-  [data-digit="8"] span:nth-child(4)::before{border-radius:0 0 100% 0;background:var(--b2)}
-  [data-digit="8"] span:nth-child(4)::after{background:repeating-radial-gradient(circle at 0% 100%,currentColor,currentColor 5.42%,transparent 5.42%,transparent 10.85%);border-radius:0 100% 0 0}
-  [data-digit="8"] span:nth-child(5){background:var(--b1);border-radius:0 0 0 100%}
-  [data-digit="8"] span:nth-child(6){background:currentColor;border-radius:0 0 100% 0}
+  [data-digit="1"] span:nth-child(4) {
+    background: var(--b3)
+  }
 
-  [data-digit="9"] span:nth-child(1){background:repeating-radial-gradient(circle at 100% 100%,currentColor,currentColor 5.42%,transparent 5.42%,transparent 10.85%);border-radius:100% 0 0 0}
-  [data-digit="9"] span:nth-child(2){background:var(--b2);border-radius:0 100% 0 0}
-  [data-digit="9"] span:nth-child(3){background:var(--b1);border-radius:0 0 0 100%}
-  [data-digit="9"] span:nth-child(4){background:repeating-radial-gradient(circle at 0% 0%,currentColor,currentColor 5.42%,transparent 5.42%,transparent 10.85%)}
-  [data-digit="9"] span:nth-child(5){background:var(--b3);border-radius:0 0 0 100%}
-  [data-digit="9"] span:nth-child(6){background:currentColor;border-radius:0 0 100% 0}
+  [data-digit="1"] span:nth-child(6) {
+    background: var(--b2)
+  }
+
+  [data-digit="2"] span:nth-child(1) {
+    border-radius: 100% 0 0 0;
+    background: var(--b1)
+  }
+
+  [data-digit="2"] span:nth-child(2) {
+    background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%);
+    border-radius: 0 100% 0 0
+  }
+
+  [data-digit="2"] span:nth-child(4) {
+    background: var(--b2);
+    border-radius: 0 0 100% 0
+  }
+
+  [data-digit="2"] span:nth-child(5) {
+    background: var(--b3)
+  }
+
+  [data-digit="2"] span:nth-child(6) {
+    background-image: repeating-linear-gradient(180deg, currentColor 0%, currentColor 50%, transparent 50%, transparent 100%);
+    background-size: 15.42% 15.42%
+  }
+
+  [data-digit="3"] span:nth-child(1) {
+    border-radius: 100% 0 0 0;
+    background: var(--b2)
+  }
+
+  [data-digit="3"] span:nth-child(2) {
+    background: currentColor;
+    border-radius: 0 100% 0 0
+  }
+
+  [data-digit="3"] span:nth-child(4)::before {
+    background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%);
+    border-radius: 0 100% 0 0
+  }
+
+  [data-digit="3"] span:nth-child(4)::after {
+    background: repeating-radial-gradient(circle at 0% 0%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%);
+    border-radius: 0 0 100% 0
+  }
+
+  [data-digit="3"] span:nth-child(5) {
+    background: var(--b3);
+    border-radius: 0 0 0 100%
+  }
+
+  [data-digit="3"] span:nth-child(6) {
+    background: var(--b1);
+    border-radius: 0 0 100% 0
+  }
+
+  [data-digit="4"] span:nth-child(1) {
+    border-radius: 0 100% 0 0;
+    background: var(--b2)
+  }
+
+  [data-digit="4"] span:nth-child(2) {
+    background-image: repeating-linear-gradient(90deg, currentColor 0%, currentColor 50%, transparent 50%, transparent 100%);
+    background-size: 15.42% 15.42%
+  }
+
+  [data-digit="4"] span:nth-child(3) {
+    border-radius: 0 0 0 100%;
+    background: currentColor
+  }
+
+  [data-digit="4"] span:nth-child(4) {
+    background: var(--b3)
+  }
+
+  [data-digit="4"] span:nth-child(6) {
+    background: var(--b1)
+  }
+
+  [data-digit="5"] span:nth-child(1) {
+    background: var(--b3)
+  }
+
+  [data-digit="5"] span:nth-child(2) {
+    border-radius: 0 0 100% 0;
+    background: currentColor
+  }
+
+  [data-digit="5"] span:nth-child(4) {
+    background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%);
+    border-radius: 0 100% 0 0
+  }
+
+  [data-digit="5"] span:nth-child(5) {
+    border-radius: 0 0 0 100%;
+    background: var(--b2)
+  }
+
+  [data-digit="5"] span:nth-child(6) {
+    border-radius: 0 0 100% 0;
+    background: var(--b1)
+  }
+
+  [data-digit="6"] span:nth-child(1) {
+    border-radius: 100% 0 0 0;
+    background: currentColor
+  }
+
+  [data-digit="6"] span:nth-child(2) {
+    border-radius: 0 100% 0 0;
+    background: var(--b2)
+  }
+
+  [data-digit="6"] span:nth-child(3) {
+    background: var(--b3)
+  }
+
+  [data-digit="6"] span:nth-child(4) {
+    background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%);
+    border-radius: 0 100% 0 0
+  }
+
+  [data-digit="6"] span:nth-child(5) {
+    border-radius: 0 0 0 100%;
+    background: var(--b2)
+  }
+
+  [data-digit="6"] span:nth-child(6) {
+    border-radius: 0 0 100% 0;
+    background: var(--b1)
+  }
+
+  [data-digit="7"] span:nth-child(1) {
+    background: var(--b2)
+  }
+
+  [data-digit="7"] span:nth-child(2) {
+    border-radius: 0 100% 0 0;
+    background: var(--b1)
+  }
+
+  [data-digit="7"] span:nth-child(4) {
+    background: var(--b3)
+  }
+
+  [data-digit="7"] span:nth-child(6) {
+    background: currentColor
+  }
+
+  [data-digit="8"] span:nth-child(1) {
+    border-radius: 100% 0 0 0;
+    background: var(--b2)
+  }
+
+  [data-digit="8"] span:nth-child(2) {
+    border-radius: 0 100% 0 0;
+    background: var(--b3)
+  }
+
+  [data-digit="8"] span:nth-child(3)::before {
+    border-radius: 100% 0 0 0;
+    background: var(--b3)
+  }
+
+  [data-digit="8"] span:nth-child(3)::after {
+    background: repeating-radial-gradient(circle at 100% 0%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%);
+    border-radius: 0 0 0 100%
+  }
+
+  [data-digit="8"] span:nth-child(4)::before {
+    border-radius: 0 0 100% 0;
+    background: var(--b2)
+  }
+
+  [data-digit="8"] span:nth-child(4)::after {
+    background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%);
+    border-radius: 0 100% 0 0
+  }
+
+  [data-digit="8"] span:nth-child(5) {
+    background: var(--b1);
+    border-radius: 0 0 0 100%
+  }
+
+  [data-digit="8"] span:nth-child(6) {
+    background: currentColor;
+    border-radius: 0 0 100% 0
+  }
+
+  [data-digit="9"] span:nth-child(1) {
+    background: repeating-radial-gradient(circle at 100% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%);
+    border-radius: 100% 0 0 0
+  }
+
+  [data-digit="9"] span:nth-child(2) {
+    background: var(--b2);
+    border-radius: 0 100% 0 0
+  }
+
+  [data-digit="9"] span:nth-child(3) {
+    background: var(--b1);
+    border-radius: 0 0 0 100%
+  }
+
+  [data-digit="9"] span:nth-child(4) {
+    background: repeating-radial-gradient(circle at 0% 0%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%)
+  }
+
+  [data-digit="9"] span:nth-child(5) {
+    background: var(--b3);
+    border-radius: 0 0 0 100%
+  }
+
+  [data-digit="9"] span:nth-child(6) {
+    background: currentColor;
+    border-radius: 0 0 100% 0
+  }
 
   /* ── SECTIONS ── */
   .bh-section {
     padding: 4rem 3rem;
     border-top: 6px solid var(--b4);
   }
+
   .bh-section-head {
-    display: flex; align-items: baseline; gap: 1.5rem;
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
     margin-bottom: 2.5rem;
   }
+
   .bh-section-head h2 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px; letter-spacing: 0.08em; color: var(--b4);
+    font-size: 48px;
+    letter-spacing: 0.08em;
+    color: var(--b4);
   }
+
   .bh-section-head .rule {
-    flex: 1; height: 4px;
+    flex: 1;
+    height: 4px;
     background: repeating-linear-gradient(90deg, var(--b4) 0, var(--b4) 10px, transparent 10px, transparent 18px);
   }
 
   /* ── ABOUT ── */
   .bh-about {
-    display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: start;
   }
+
   .bh-about-tile {
     aspect-ratio: 1;
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(2, 1fr);
     overflow: hidden;
     border: 4px solid var(--b4);
   }
-  .bh-about-tile span { display: grid; aspect-ratio: 1; }
-  .bh-about-tile span::before,.bh-about-tile span::after { content:''; grid-row:1; grid-column:1; }
 
-  .bh-about p { font-size: 16px; line-height: 1.8; color: #333; }
+  .bh-about-tile span {
+    display: grid;
+    aspect-ratio: 1;
+  }
+
+  .bh-about-tile span::before,
+  .bh-about-tile span::after {
+    content: '';
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .bh-about p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+  }
 
   /* ── SKILLS ── */
   .bh-skills-grid {
-    display: grid; grid-template-columns: repeat(6, 1fr); gap: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
     border: 4px solid var(--b4);
   }
+
   .skill-block {
     aspect-ratio: 1;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     border-right: 4px solid var(--b4);
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(14px, 2vw, 20px); letter-spacing: 0.1em;
+    font-size: clamp(14px, 2vw, 20px);
+    letter-spacing: 0.1em;
     cursor: default;
     transition: background 0.1s, color 0.1s;
+
+    position: relative;
+  overflow: hidden;
+  z-index: 1;
   }
-  .skill-block:last-child { border-right: none; }
-  .skill-block:nth-child(1){ background: var(--b1); color: var(--cream); }
-  .skill-block:nth-child(2){ background: var(--b2); color: var(--b4); }
-  .skill-block:nth-child(3){ background: var(--b3); color: var(--cream); }
-  .skill-block:nth-child(4){ background: var(--b4); color: var(--cream); }
-  .skill-block:nth-child(5){ background: var(--b1); color: var(--cream); }
-  .skill-block:nth-child(6){ background: var(--b2); color: var(--b4); }
+  /* The Bauhaus digit that will peek through or overlay */
+/* The Bauhaus background inside each skill */
+.skill-digit-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: -1;
+  opacity: 0.15; /* Keep it very subtle so text stays readable */
+  transition: opacity 0.3s ease, transform 0.5s ease;
+  transform: scale(0.8); /* Slightly smaller until hover */
+}
+
+
+
+.skill-block:hover {
+  color: var(--cream) !important; /* Ensure text pops */
+  background: var(--b4) !important; /* Darken background to let patterns shine */
+}
+
+
+
+
+
+  .skill-block:last-child {
+    border-right: none;
+  }
+
+  .skill-block:nth-child(1) {
+    background: var(--b1);
+    color: var(--cream);
+  }
+
+  .skill-block:nth-child(2) {
+    background: var(--b2);
+    color: var(--b4);
+  }
+
+  .skill-block:nth-child(3) {
+    background: var(--b3);
+    color: var(--cream);
+  }
+
+  .skill-block:nth-child(4) {
+    background: var(--b4);
+    color: var(--cream);
+  }
+
+  .skill-block:nth-child(5) {
+    background: var(--b1);
+    color: var(--cream);
+  }
+
+  .skill-block:nth-child(6) {
+    background: var(--b2);
+    color: var(--b4);
+  }
 
   /* ── PROJECTS ── */
   .bh-projects-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
     border: 4px solid var(--b4);
   }
+
   .proj-card {
     padding: 2rem 1.5rem;
     border-right: 4px solid var(--b4);
     position: relative;
     overflow: hidden;
   }
-  .proj-card:last-child { border-right: none; }
+
+  .proj-card:last-child {
+    border-right: none;
+  }
+
   .proj-card::before {
     content: '';
-    display: block; width: 40px; height: 40px; margin-bottom: 1rem;
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 1rem;
     border-radius: 50%;
   }
-  .proj-card:nth-child(1)::before { background: var(--b1); }
-  .proj-card:nth-child(2)::before { background: var(--b3); }
-  .proj-card:nth-child(3)::before { background: var(--b2); }
+
+  .proj-card:nth-child(1)::before {
+    background: var(--b1);
+  }
+
+  .proj-card:nth-child(2)::before {
+    background: var(--b3);
+  }
+
+  .proj-card:nth-child(3)::before {
+    background: var(--b2);
+  }
 
   .proj-card h3 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px; letter-spacing: 0.08em;
+    font-size: 22px;
+    letter-spacing: 0.08em;
     margin-bottom: 0.5rem;
   }
-  .proj-card p { font-size: 13px; line-height: 1.7; color: #555; margin-bottom: 1rem; }
-  .proj-card a {
-    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--b3); text-decoration: none; font-weight: 700;
+
+  .proj-card p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 1rem;
   }
-  .proj-card a:hover { text-decoration: underline; }
+
+  .proj-card a {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--b3);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .proj-card a:hover {
+    text-decoration: underline;
+  }
 
   /* ── CONTACT ── */
   .bh-contact {
     background: var(--b4);
-    padding: 3rem; border-top: 6px solid var(--b1);
-    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center;
+    padding: 3rem;
+    border-top: 6px solid var(--b1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
   }
+
   .bh-contact h2 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 56px; letter-spacing: 0.1em; color: var(--cream);
+    font-size: 56px;
+    letter-spacing: 0.1em;
+    color: var(--cream);
   }
-  .bh-contact-links { display: flex; flex-direction: column; gap: 12px; }
+
+  .bh-contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
   .bh-contact-links a {
-    font-size: 14px; color: #bbb; text-decoration: none;
+    font-size: 14px;
+    color: #bbb;
+    text-decoration: none;
     letter-spacing: 0.05em;
     padding-left: 1rem;
     border-left: 3px solid var(--b2);
   }
-  .bh-contact-links a:hover { color: var(--b2); }
+
+  .bh-contact-links a:hover {
+    color: var(--b2);
+  }
 
   /* ── FOOTER ── */
   .bh-footer {
-    background: var(--b4); color: #555; text-align: center;
-    font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
-    padding: 1rem; border-top: 2px solid #222;
+    background: var(--b4);
+    color: #555;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 1rem;
+    border-top: 2px solid #222;
   }
-  .bh-footer span { color: var(--b1); }
+
+  .bh-footer span {
+    color: var(--b1);
+  }
 </style>
+</head>
+<body>
+  
 
 <div class="bh-page">
 
@@ -296,7 +707,7 @@
   <div class="bh-hero">
     <div class="bh-hero-left">
       <h1>Hello,<br>myself<br><em>shash<br>King</em></h1>
-      <p>I'm Chaotic neutral. And... it's too late to look away, Darling.</p>
+      <p>I would classify myself as <br>a Technical Multimedia Specialist</p>
       <a class="bh-cta" href="#projects">See My Work</a>
     </div>
 
@@ -314,7 +725,11 @@
         <span></span><span></span><span></span>
         <span></span><span></span><span></span>
       </div>
-      <p>I'm a developer skilled in building responsive, scalable, and user-friendly applications. My focus is on clean code, modern technologies, and delivering impactful digital experiences. Form follows function — always.</p>
+      <p>As a developer, I'm skilled in building responsive, scalable, and user-friendly applications. My focus is on
+        clean code, modern technologies, and delivering impactful digital experiences. Form follows function — always.
+      <br>
+      As a designer, interactive work is modern, modular, and easy for any development team to integrate in games,
+        web or any other media.</p>
     </div>
   </div>
 
@@ -324,12 +739,12 @@
       <div class="rule"></div>
     </div>
     <div class="bh-skills-grid">
-      <div class="skill-block">HTML</div>
-      <div class="skill-block">CSS</div>
-      <div class="skill-block">JS</div>
-      <div class="skill-block">Node</div>
-      <div class="skill-block">Express</div>
-      <div class="skill-block">Mongo</div>
+      <div class="skill-block">Interactive & Web</div>
+      <a href="skills/index.html?id=video-vfx" class="skill-block">GenAI & Digital Art</a>
+      <div class="skill-block">Illustrations</div>
+      <a href="skills/index.html?id=video-vfx" class="skill-block">Video & VFX</a>
+      <a href="skills/index.html?id=video-vfx" class="skill-block">OBS Studio Live Ops</a>
+      <div class="skill-block">AR / VR Development</div>
     </div>
   </div>
 
@@ -360,9 +775,9 @@
   <div class="bh-contact" id="contact">
     <h2>Get<br>In<br>Touch</h2>
     <div class="bh-contact-links">
-      <a href="mailto:shashaankinbox@gmail.com">shashaankinbox@gmail.com</a>
-      <a href="https://www.linkedin.com/in/shashking/">linkedin.com/in/shashking</a>
-      <a href="https://www.instagram.com/shashking/">instagram.com/shashking</a>
+      <a href="mailto:shashaankinbox@gmail.com" target="_blank">shashaankinbox@gmail.com</a>
+      <a href="https://www.linkedin.com/in/shashking/" target="_blank">linkedin.com/in/shashking</a>
+      <a href="https://www.instagram.com/shashking/" target="_blank">instagram.com/shashking</a>
     </div>
   </div>
 
@@ -370,43 +785,66 @@
 </div>
 
 <script>
-const COLORS = ['#fe3424','#fdbf36','#1e69aa','#0d0d0d','#f5f0e8'];
-const BG_COMBOS = [
-  ['#fe3424','#f5f0e8'], ['#fdbf36','#0d0d0d'], ['#1e69aa','#f5f0e8'],
-  ['#0d0d0d','#fdbf36'], ['#f5f0e8','#fe3424'], ['#1e69aa','#fdbf36'],
-  ['#0d0d0d','#fe3424'], ['#fdbf36','#1e69aa'], ['#f5f0e8','#0d0d0d']
-];
+  const COLORS = ['#fe3424', '#fdbf36', '#1e69aa', '#0d0d0d', '#f5f0e8'];
+  const BG_COMBOS = [
+    ['#fe3424', '#f5f0e8'], ['#fdbf36', '#0d0d0d'], ['#1e69aa', '#f5f0e8'],
+    ['#0d0d0d', '#fdbf36'], ['#f5f0e8', '#fe3424'], ['#1e69aa', '#fdbf36'],
+    ['#0d0d0d', '#fe3424'], ['#fdbf36', '#1e69aa'], ['#f5f0e8', '#0d0d0d']
+  ];
 
-function makeTile(bgColor, fgColor) {
-  const d = document.createElement('div');
-  d.className = 'tile';
-  d.style.background = bgColor;
-  d.style.color = fgColor;
-  d.dataset.digit = '0';
-  for (let i = 0; i < 6; i++) {
-    const s = document.createElement('span');
-    d.appendChild(s);
+  const grid = document.getElementById('tile-grid');
+  let tiles = []; // Changed from const to let so we can reset it on resize
+
+  function makeTile(bgColor, fgColor) {
+    const d = document.createElement('div');
+    d.className = 'tile';
+    d.style.background = bgColor;
+    d.style.color = fgColor;
+    d.dataset.digit = currentDigit; // Maintain current countdown state
+    for (let i = 0; i < 6; i++) {
+      const s = document.createElement('span');
+      d.appendChild(s);
+    }
+    return d;
   }
-  return d;
-}
 
-const grid = document.getElementById('tile-grid');
-const tiles = [];
-BG_COMBOS.forEach(([bg, fg]) => {
-  const t = makeTile(bg, fg);
-  grid.appendChild(t);
-  tiles.push(t);
-});
+  function fillGrid() {
+    grid.innerHTML = '';
+    tiles = []; // Now allowed because of 'let'
+    
+    const tileWidth = grid.offsetWidth / 3;
+    if (tileWidth === 0) return; // Prevent division by zero if hidden
 
-const aboutTile = document.getElementById('about-tile');
-aboutTile.style.color = '#fe3424';
-aboutTile.dataset.digit = '0';
+    const rowsNeeded = Math.ceil(grid.offsetHeight / tileWidth);
+    const totalTiles = rowsNeeded * 3;
 
-let current = 9;
-setInterval(() => {
-  if (current < 0) current = 9;
-  const d = current--;
-  tiles.forEach(t => t.dataset.digit = d);
-  aboutTile.dataset.digit = d;
-}, 1000);
+    for (let i = 0; i < totalTiles; i++) {
+      const [bg, fg] = BG_COMBOS[i % BG_COMBOS.length];
+      const t = makeTile(bg, fg);
+      grid.appendChild(t);
+      tiles.push(t);
+    }
+  }
+
+  const aboutTile = document.getElementById('about-tile');
+  aboutTile.style.color = '#fe3424';
+  
+  let currentDigit = 9;
+
+  // Initial fill
+  fillGrid();
+  window.addEventListener('resize', fillGrid);
+
+  // Unified interval for the countdown
+  setInterval(() => {
+    currentDigit = currentDigit < 0 ? 9 : currentDigit;
+    tiles.forEach(t => t.dataset.digit = currentDigit);
+    if (aboutTile) aboutTile.dataset.digit = currentDigit;
+    currentDigit--;
+  }, 1000);
+
+
 </script>
+
+</body>
+</html>

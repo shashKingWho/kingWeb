@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Skill Details | shashKing</title>
+    <meta name="title" content="shashKing | Interactive Media & Video VFX Specialist">
+    <meta name="description"
+        content="Portfolio of Shashaank (shashKing). Senior Video Editor & Interactive Developer specializing in Bauhaus-inspired web design, VFX, and GenAI integration.">
+    <meta name="keywords"
+        content="shashking, shashaank, video editor, vfx artist, interactive web, GSAP developer, bauhaus design, genai art">
+    <meta name="author" content="Shashaank">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;700&display=swap');
+
+        :root {
+            --b1: #fe3424;
+            --b2: #fdbf36;
+            --b3: #1e69aa;
+            --b4: #0d0d0d;
+            --cream: #f5f0e8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--cream);
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--b4);
+            overflow-x: hidden;
+        }
+
+        /* --- ALL-SEEING EYE CSS (Your Funky Template) --- */
+        .eye-section {
+            background: var(--cream);
+            width: 100%;
+            position: relative;
+            border-bottom: 8px solid var(--b4);
+        }
+
+        .mosaic {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            width: 100%;
+            border-bottom: 5px solid var(--b4);
+        }
+
+        .mc {
+            aspect-ratio: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mc.red {
+            background: var(--b1);
+        }
+
+        .mc.yellow {
+            background: var(--b2);
+        }
+
+        .mc.blue {
+            background: var(--b3);
+        }
+
+        .mc.dark {
+            background: var(--b4);
+        }
+
+        .dot {
+            position: absolute;
+            width: 22%;
+            height: 22%;
+            background: var(--b4);
+            border-radius: 50%;
+        }
+
+        .dot.c {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .stripes {
+            width: 100%;
+            height: 100px;
+            display: flex;
+            border-bottom: 5px solid var(--b4);
+        }
+
+        .stripe {
+            flex: 1;
+            background: var(--b4);
+        }
+
+        .stripe:nth-child(even) {
+            background: var(--cream);
+        }
+
+        .eye-wrap {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--cream);
+            padding: 40px 0;
+        }
+
+        .eyeball {
+            position: relative;
+            width: 80%;
+            max-width: 500px;
+            aspect-ratio: 2/1;
+            z-index: 2;
+        }
+
+        .sclera {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 50%;
+            border: 5px solid var(--b4);
+            position: relative;
+            overflow: hidden;
+            clip-path: ellipse(50% 38% at 50% 50%);
+        }
+
+        .iris-group {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 45%;
+            aspect-ratio: 1;
+            transition: transform 0.1s ease-out;
+        }
+
+        .iris {
+            width: 100%;
+            height: 100%;
+            background: var(--b3);
+            border-radius: 50%;
+            border: 5px solid var(--b4);
+        }
+
+        .pupil {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            background: var(--b4);
+            aspect-ratio: 1;
+            border-radius: 50%;
+        }
+
+        .sclera {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 50%;
+            border: 5px solid var(--b4);
+            position: relative;
+            /* This keeps the lids invisible when they are at -50% */
+            overflow: hidden;
+            clip-path: ellipse(50% 38% at 50% 50%);
+            z-index: 1;
+        }
+
+        .lid-top {
+            position: absolute;
+            top: -50%;
+            /* Hidden above the clip-path line */
+            left: 0;
+            height: 50%;
+            width: 100%;
+            background: var(--cream);
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            border-bottom: 2px solid var(--b4);
+            z-index: 10;
+            /* Above the iris */
+            animation: blink 5s infinite ease-in-out;
+        }
+
+        .lid-bottom {
+            position: absolute;
+            bottom: -50%;
+            /* Hidden below the clip-path line */
+            left: 0;
+            height: 50%;
+            width: 100%;
+            background: var(--b1);
+            /* Using the red for the bottom lid flavor */
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            border-top: 2px solid var(--b4);
+            z-index: 10;
+            /* Above the iris */
+            animation: blink-bottom 5s infinite ease-in-out;
+        }
+
+
+        /* --- EYE BLINK ANIMATION --- */
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: translateY(0);
+            }
+
+            /* Open */
+            92%,
+            98% {
+                transform: translateY(100%);
+            }
+
+            /* Closed (Top moves down) */
+        }
+
+        @keyframes blink-bottom {
+
+            0%,
+            90%,
+            100% {
+                transform: translateY(0);
+            }
+
+            /* Open */
+            92%,
+            98% {
+                transform: translateY(-100%);
+            }
+
+            /* Closed (Bottom moves up) */
+        }
+
+        .lid-top {
+            position: absolute;
+            top: -50%;
+            /* Positioned above the viewport of the eye */
+            height: 50%;
+            width: 100%;
+            background: var(--cream);
+            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+            z-index: 3;
+            /* border-bottom: 2px solid var(--b4); */
+            /* Use 'forwards' to ensure it returns to start */
+            animation: blink 5s infinite ease-in-out;
+        }
+
+        .lid-bottom {
+            position: absolute;
+            bottom: -50%;
+            /* Positioned below the viewport of the eye */
+            height: 50%;
+            width: 100%;
+            background: var(--cream);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            z-index: 3;
+            /* border-top: 2px solid var(--b4); */
+            animation: blink-bottom 5s infinite ease-in-out;
+        }
+
+        /* Optional: Slight squash effect on the eyeball during blink */
+        @keyframes eyeball-squash {
+
+            0%,
+            90%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            92%,
+            98% {
+                transform: scaleY(0.95);
+            }
+        }
+
+        .eyeball {
+            position: relative;
+            width: 80%;
+            max-width: 500px;
+            aspect-ratio: 2/1;
+            z-index: 2;
+            animation: eyeball-squash 5s infinite ease-in-out;
+        }
+
+        /* --- SEO CONTENT AREA --- */
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 50px;
+        }
+
+        .main-col h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 80px;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            color: var(--b1);
+        }
+
+        .main-col p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--b3);
+            padding-left: 20px;
+        }
+
+        .side-col h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 30px;
+            margin-bottom: 15px;
+            background: var(--b2);
+            padding: 5px 10px;
+            display: inline-block;
+        }
+
+        .side-col ul {
+            list-style: none;
+        }
+
+        .side-col li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .side-col li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--b1);
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            font-family: 'Bebas Neue', sans-serif;
+            text-decoration: none;
+            color: var(--b4);
+            border: 2px solid var(--b4);
+            padding: 10px 20px;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--b4);
+            color: var(--cream);
+        }
+
+
+        /* ddddddddddddd */
+        
+  /* ── CONTACT ── */
+  .bh-contact {
+    background: var(--b4);
+    padding: 3rem;
+    border-top: 6px solid var(--b1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .bh-contact h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+  }
+
+  .bh-contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bh-contact-links a {
+    font-size: 14px;
+    color: #bbb;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    padding-left: 1rem;
+    border-left: 3px solid var(--b2);
+  }
+
+  .bh-contact-links a:hover {
+    color: var(--b2);
+  }
+
+  /* ── FOOTER ── */
+  .bh-footer {
+    background: var(--b4);
+    color: #555;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 1rem;
+    border-top: 2px solid #222;
+  }
+
+  .bh-footer span {
+    color: var(--b1);
+  }
+    </style>
+</head>
+
+<body>
+
+    <div class="eye-section">
+        <div class="mosaic">
+            <div class="mc red">
+                <div class="dot c"></div>
+            </div>
+            <div class="mc dark"></div>
+            <div class="mc yellow">
+                <div class="dot c"></div>
+            </div>
+            <div class="mc blue"></div>
+            <div class="mc red"></div>
+            <div class="mc dark">
+                <div class="dot c" style="background:var(--cream)"></div>
+            </div>
+        </div>
+        <div class="stripes">
+            <div class="stripe"></div>
+            <div class="stripe"></div>
+            <div class="stripe"></div>
+            <div class="stripe"></div>
+            <div class="stripe"></div>
+        </div>
+        <div class="eye-wrap">
+            <div class="eyeball" id="eyeball">
+                <div class="sclera">
+                    <div class="lid-top"></div>
+                    <div class="lid-bottom"></div>
+
+                    <div class="iris-group" id="irisGroup">
+                        <div class="iris">
+                            <div class="pupil"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <main class="content-container">
+        <div class="main-col">
+            <h1 id="title">Skill Title</h1>
+            <p id="summary">Loading content...</p>
+            <a href="../index.html" class="back-btn">Back to Portfolio</a>
+        </div>
+        <div class="side-col">
+            <h3>Key Projects</h3>
+            <ul id="projects"></ul>
+            <br>
+            <h3>Software Stack</h3>
+            <p id="stack" style="border:none; padding:0; font-weight:bold;"></p>
+        </div>
+    </main>
+    
+  <div class="bh-contact" id="contact">
+    <h2>Get<br>In<br>Touch</h2>
+    <div class="bh-contact-links">
+      <a href="mailto:shashaankinbox@gmail.com" target="_blank">shashaankinbox@gmail.com</a>
+      <a href="https://www.linkedin.com/in/shashking/" target="_blank">linkedin.com/in/shashking</a>
+      <a href="https://www.instagram.com/shashking/" target="_blank">instagram.com/shashking</a>
+    </div>
+  </div>
+
+  <div class="bh-footer">© 2025 <span>shashKing</span> — All Rights Reserved</div>
+</div>
+
+    <script>
+        const skillData = {
+            "video-vfx": {
+                title: "Video & VFX",
+                summary: "Senior Video Editor with 4+ years of experience bridging the gap between traditional cinema and interactive digital media. Expert in post-production, VFX, and 360° immersive editing.",
+                stack: "Adobe Premiere Pro, After Effects, DaVinci Resolve, 360° video editing.",
+                projects: ["VR Education Series", "VFX Showreel", "High-budget Cinematic Campaigns"]
+            },
+            "interactive-web": {
+                title: "Interactive & Web",
+                summary: "Engineered storytelling portals using Web Components and GSAP, allowing users to navigate gamified narratives with zero global scope pollution.",
+                stack: "HTML5, Web Components, GSAP, Lottie, Gamification Logic.",
+                projects: ["Gamified Web Narrative", "Custom Interactive Player", "Dynamic Bauhaus Portfolio"]
+            }
+            // Add other keys like "genai", "obs", etc.
+        };
+
+        // 1. Get ID from URL
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+        const data = skillData[id] || skillData["video-vfx"];
+
+        // 2. Inject Data
+        document.getElementById('title').innerText = data.title;
+        document.getElementById('pageTitle').innerText = data.title + " | shashKing";
+        document.getElementById('summary').innerText = data.summary;
+        document.getElementById('stack').innerText = data.stack;
+        document.getElementById('projects').innerHTML = data.projects.map(p => `<li>${p}</li>`).join('');
+
+        // 3. All-Seeing Eye Logic
+        const iris = document.getElementById('irisGroup');
+        const eball = document.getElementById('eyeball');
+        document.addEventListener('mousemove', (e) => {
+            const rect = eball.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width - 0.5;
+            const y = (e.clientY - rect.top) / rect.height - 0.5;
+            iris.style.transform = `translate(calc(-50% + ${x * 30}px), calc(-50% + ${y * 20}px))`;
+        });
+
+
+
+        // blink click
+        document.getElementById('eyeball').addEventListener('click', () => {
+            const lids = document.querySelectorAll('.lid-top, .lid-bottom');
+
+            lids.forEach(lid => {
+                lid.style.animation = 'none';
+                void lid.offsetWidth; // Force reflow
+
+                // Manual quick blink (0.3s)
+                if (lid.classList.contains('lid-top')) {
+                    lid.style.animation = 'blink 0.3s ease-in-out forwards';
+                } else {
+                    lid.style.animation = 'blink-bottom 0.3s ease-in-out forwards';
+                }
+            });
+
+            // Reset to the 5s loop after the manual blink finishes
+            setTimeout(() => {
+                document.querySelector('.lid-top').style.animation = 'blink 5s infinite ease-in-out';
+                document.querySelector('.lid-bottom').style.animation = 'blink-bottom 5s infinite ease-in-out';
+            }, 300);
+        });
+    </script>
+</body>
+
+</html>

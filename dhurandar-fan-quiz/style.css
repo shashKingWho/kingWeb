@@ -432,28 +432,44 @@ html, body {
 }
 
 
-/* ── Classified lines (from classified.js) ── */
-.classified-line {
-  position: relative;
-  display: inline-block; /* Changed from block to fit text tightly */
+/* ── Classified lines ── */
+
+/* Outer clip — overflow:hidden is the scissors */
+.classified-raw-line {
   overflow: hidden;
-  vertical-align: top;
+  display: block;
 }
 
+/* Relative container for inner + mask */
+.classified-line {
+  position: relative;
+  display: block;
+  /* NO overflow:hidden here — that's on .classified-raw-line */
+}
+
+/* Actual text */
 .classified-line__inner {
   display: block;
   opacity: 0;
   will-change: transform, opacity;
 }
 
+/*
+  Black redaction bar.
+  Uses translateX (xPercent) not scaleX:
+  - No layout reflow
+  - Moves as a solid bar, pixel-perfect
+  Starts at xPercent:0  (fully covers text)
+  Animates to xPercent:-100  (slides off left → reveals text)
+  transformOrigin: right center  (so reverse slides back from right)
+*/
 .classified-line__mask {
   position: absolute;
   inset: 0;
-  background: var(--ink); /* This is your redacted black bar */
+  background: var(--ink);
   z-index: 2;
   will-change: transform;
   transform-origin: right center;
-  transform: scaleX(1); /* Starts fully covering the text */
 }
 
 

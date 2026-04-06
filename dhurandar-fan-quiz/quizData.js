@@ -59,5 +59,11 @@ export const quizData = [
       "Major Iqbal"
     ],
     correctIndex: 0
-  }
+  },
+  
+  {
+    question: "Who directed Dhurandhar?",
+    options: ["Sanjay Leela Bhansali", "Rohit Shetty", "SS Rajamouli", "Aditya Dhar"],
+    correctIndex: 3
+  },
 ];

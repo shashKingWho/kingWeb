@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,112 +13,928 @@
   <meta property="og:title" content="Dhurandhar: The Ultimate Quiz">
   <meta property="og:description"
     content="Are you a true Dhurandhar fan? Test your intel in this classified mission by ShashKing.">
-  <meta property="og:image" content="assets/shashKing_creator_400x400.jpg">
+  <meta property="og:image" content="assets/bg-1.jpg">
 
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:title" content="Dhurandhar: The Ultimate Quiz">
   <meta property="twitter:description" content="Mission coordinated by ShashKing. Test your movie knowledge.">
-  <meta property="twitter:image" content="assets/shashKing_creator_400x400.jpg">
+  <meta property="twitter:image" content="assets/bg-1.jpg">
+
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,300;0,600;1,300&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Sans:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
 
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org/",
-  "@type": "Quiz",
-  "name": "Dhurandhar: The Ultimate Quiz",
-  "hasPart": {
-    "@type": "CreativeWork",
-    "author": {
-      "@type": "Person",
-      "name": "ShashKing",
-      "jobTitle": "Intel Coordinator",
-      "url": "https://your-portfolio-or-social-link.com"
+  <style>
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    img { display: block; max-width: none; }
+
+    /* ── TOKENS ── */
+    :root {
+      --ink:        #0a0a0a;
+      --amber:      #e8a020;
+      --amber-dim:  #c47a10;
+      --amber-glow: rgba(232,160,32,0.18);
+      --red:        #c0392b;
+      --white:      #f0ede8;
+      --muted:      rgba(240,237,232,0.55);
+      --border:     rgba(240,237,232,0.12);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-mono:    'IBM Plex Mono', monospace;
+      --font-body:    'IBM Plex Sans', sans-serif;
+      --gutter: clamp(1.5rem, 4vw, 3.5rem);
     }
-  },
-  "educationalAlignment": "Entertainment",
-  "interactivityType": "active",
-  "description": "A high-fidelity interactive quiz based on the movie Dhurandhar.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "INDIE CORE LOGIC"
-  }
-}
-</script>
-</head>
 
+    /* ── BODY ── */
+    html, body {
+      background: var(--ink);
+      color: var(--white);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* ── GRAIN ── */
+    #grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.045;
+      mix-blend-mode: overlay;
+    }
+
+    /* ── INTRO ── */
+    .intro-screen {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--ink);
+    }
+    .intro__bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+    }
+    .intro__content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 720px;
+      padding: var(--gutter);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .intro__creator {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--amber-dim);
+      margin-bottom: 0.5rem;
+    }
+    .intro__stamp {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      color: var(--red);
+      margin-bottom: 1.5rem;
+    }
+    .intro__title {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 15vw, 11rem);
+      line-height: 0.9;
+      color: var(--amber);
+      letter-spacing: 0.02em;
+      text-shadow: 0 0 80px rgba(232,160,32,0.3);
+    }
+    .intro__subtitle {
+      font-family: var(--font-mono);
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      text-transform: uppercase;
+    }
+    .intro__body {
+      font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 1.5rem;
+      line-height: 1.7;
+    }
+    .intro__cta {
+      margin-top: 2.5rem;
+      background: none;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      padding: 0.85rem 2rem;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+    }
+    .intro__cta:hover { background: var(--amber); color: var(--ink); }
+    .intro__scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeIn 1s 2.5s forwards;
+    }
+    .intro__scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      animation: scrollPulse 2s 2.5s infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; }
+      50%       { opacity: 1; }
+    }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ── STORY WRAPPER (scroll container) ── */
+    /* storySection height is set by JS */
+    #storySection {
+      position: relative;
+      width: 100%;
+    }
+
+    /* ── STORY (sticky viewport) ── */
+    .story {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── TRACK ── */
+    .story__track {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      will-change: transform;
+    }
+
+    /* ── PANEL ──
+       position:absolute so GSAP x/left positioning works.
+       NO flex centering here — content is absolutely positioned inside. */
+    .panel {
+      position: absolute;
+      top: 0;
+      width: 100vw;
+      height: 100svh;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* background */
+    .panel__background {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    .panel__background::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.55) 100%);
+      z-index: 2;
+    }
+    .panel__bg-texture {
+      position: absolute;
+      inset: -15%;
+      z-index: 1;
+      will-change: transform;
+    }
+    .panel__bg-texture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* scanlines */
+    .panel__scanlines {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 3px,
+        rgba(0,0,0,0.08) 3px, rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+    }
+
+    /* progress bar */
+    .panel__progress {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 6px;
+      z-index: 10;
+      background: rgba(240,237,232,0.06);
+    }
+    .panel__progress-fill {
+      height: 100%;
+      background: var(--amber);
+      transform-origin: left;
+      transform: scaleX(0);
+      box-shadow: 0 0 8px rgba(232,160,32,0.6), 0 0 16px rgba(232,160,32,0.3);
+    }
+
+    /* side label */
+    .panel__side-label {
+      position: absolute;
+      right: var(--gutter);
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: rgba(240,237,232,0.15);
+      z-index: 5;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    /* ── CONTENT BLOCK ──
+       position:absolute + top/transform for vertical centering.
+       GSAP will drive the X axis for parallax — no flex fighting it. */
+    .panel__content {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      /* translateY for vertical centering only — GSAP controls X */
+      transform: translateY(-50%);
+      z-index: 4;
+      width: 90%;
+      max-width: 850px;
+      padding: 0 var(--gutter);
+      text-align: left;
+      will-change: transform;
+    }
+
+    .panel__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .panel__question {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      line-height: 1.05;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      margin-bottom: 2rem;
+    }
+
+    /* options */
+    .panel__options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      max-width: 500px;
+    }
+    .option-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(240,237,232,0.04);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1.1rem;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: clamp(0.78rem, 1.2vw, 0.92rem);
+      color: var(--muted);
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      opacity: 0;
+      transform: translateY(8px);
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+    }
+    .option-item::before {
+      content: attr(data-letter);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--amber-dim);
+      min-width: 1.4em;
+      flex-shrink: 0;
+    }
+    .option-item:hover { border-color: var(--amber); color: var(--white); }
+    .option-item.selected  { background: var(--amber-glow) !important; border-color: var(--amber) !important; color: var(--white) !important; }
+    .option-item.correct   { background: rgba(39,174,96,0.18) !important; border-color: #27ae60 !important; color: #2ecc71 !important; }
+    .option-item.wrong     { background: rgba(192,57,43,0.18) !important; border-color: var(--red) !important; color: #e74c3c !important; }
+    .option-item input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+
+    /* ── CLASSIFIED LINES ── */
+    .classified-line {
+      position: relative;
+      display: block;
+      overflow: hidden;
+    }
+    .classified-line__inner {
+      display: block;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    .classified-line__mask {
+      position: absolute;
+      inset: 0;
+      background: var(--ink);
+      z-index: 2;
+      will-change: transform;
+      transform-origin: right center;
+    }
+
+    /* ── FINISH BUTTON ── */
+    .finish-wrapper { position: relative; text-align: center; margin: 4rem 0; }
+    .finish-btn {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      padding: 1rem 2.5rem;
+      border: 2px solid #ff3b3b;
+      color: #ff3b3b;
+      background: transparent;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulseBorder 2s infinite;
+    }
+    .finish-btn:hover { background: #ff3b3b; color: #000; box-shadow: 0 0 20px rgba(255,59,59,0.6); }
+    @keyframes pulseBorder {
+      0%, 100% { box-shadow: 0 0 0px rgba(255,59,59,0.3); }
+      50%       { box-shadow: 0 0 12px rgba(255,59,59,0.7); }
+    }
+
+    /* ── OUTRO ── */
+    .outro {
+      min-height: 100svh;
+      background: var(--ink);
+      display: none; /* shown by JS when score is ready */
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .outro::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 20%, transparent 100%);
+    }
+    .outro__inner { position: relative; z-index: 2; text-align: center; padding: var(--gutter); }
+    .outro__label { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.3em; color: var(--red); margin-bottom: 2rem; }
+    .outro__score-display { display: flex; align-items: baseline; justify-content: center; gap: 0.2em; margin-bottom: 1.5rem; }
+    .outro__score-num { font-family: var(--font-display); font-size: clamp(6rem, 18vw, 12rem); color: var(--amber); line-height: 1; text-shadow: 0 0 60px rgba(232,160,32,0.35); }
+    .outro__score-denom { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 4rem); color: var(--muted); line-height: 1; }
+    .outro__verdict { font-family: var(--font-mono); font-size: clamp(0.85rem, 1.5vw, 1rem); color: var(--muted); max-width: 38rem; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .outro__retry {
+      background: none;
+      border: 1px solid var(--amber);
+      color: var(--amber);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      padding: 0.8rem 2rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+    }
+    .outro__retry:hover { background: var(--amber); color: var(--ink); }
+
+    /* watermark */
+    .creator-watermark {
+      position: fixed; bottom: 20px; right: 20px;
+      width: 100px; height: auto;
+      z-index: 1000; opacity: 0.3; pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .panel__content { top: auto; bottom: 10vh; transform: none; max-width: 100%; padding: 0 var(--gutter); }
+      .panel__side-label { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .classified-line__inner, .classified-line__mask, .option-item { transform: none !important; opacity: 1 !important; }
+    }
+  </style>
+</head>
 <body>
 
-  <!-- ── GRAIN OVERLAY ── -->
-  <canvas id="grain" aria-hidden="true"></canvas>
+<canvas id="grain" aria-hidden="true"></canvas>
 
-  <!-- ── INTRO TITLE SCREEN ── -->
-  <section class="intro-screen" id="intro">
-    <div class="intro__bg-grid" aria-hidden="true"></div>
-    <div class="intro__content">
-      <p class="intro__creator">INTEL COORDINATOR // SHASHKING</p>
-      <p class="intro__stamp">CLASSIFIED // FOR YOUR EYES ONLY</p>
-      <h1 class="intro__title js-classified">Dhurandhar FAN QUIZ</h1>
-      <p class="intro__subtitle js-classified">The Ultimate Quiz</p>
-      <p class="intro__body js-classified">Dhurandhar has taken over Social Media.<br>Let's see if you've actually seen
-        this movie 4 times.</p>
-      <button class="intro__cta" id="startBtn">BEGIN MISSION</button>
-      <p class="intro__body js-classified">Mission: Prove your intel is correct.</p>
+<!-- INTRO -->
+<section class="intro-screen" id="intro">
+  <div class="intro__bg-grid" aria-hidden="true"></div>
+  <div class="intro__content">
+    <p class="intro__creator">INTEL COORDINATOR // SHASHKING</p>
+    <p class="intro__stamp">CLASSIFIED // FOR YOUR EYES ONLY</p>
+    <h1 class="intro__title js-classified">Dhurandhar FAN QUIZ</h1>
+    <p class="intro__subtitle js-classified">The Ultimate Quiz</p>
+    <p class="intro__body js-classified">Dhurandhar has taken over Social Media.<br>Let's see if you've actually seen this movie 4 times.</p>
+    <button class="intro__cta" id="startBtn">BEGIN MISSION</button>
+    <p class="intro__body js-classified">Mission: Prove your intel is correct.</p>
+  </div>
+  <div class="intro__scroll-hint" aria-hidden="true">
+    <span>SCROLL DOWN</span>
+    <div class="intro__scroll-line"></div>
+  </div>
+  <img src="assets/shashKing_creator_400x400.jpg" alt="Shashaank" class="creator-watermark" />
+</section>
 
-    </div>
-    <div class="intro__scroll-hint" aria-hidden="true">
-      <span>SCROLL DOWN</span>
-      <div class="intro__scroll-line"></div>
-    </div>
-    <img src="assets/shashKing_creator_400x400.jpg" alt="Shashaank" class="creator-watermark" />
-  </section>
-
-  <!-- ── HORIZONTAL STORY ── -->
-  <main class="story" id="storySection" aria-label="Quiz panels">
-    <div class="story__track" id="storyTrack">
-      <!-- panels injected by JS -->
-    </div>
+<!-- STORY (scroll wrapper + sticky viewport) -->
+<div id="storySection">
+  <main class="story" id="storyViewport" aria-label="Quiz panels">
+    <div class="story__track" id="storyTrack"></div>
   </main>
+</div>
 
 
-
-
-
-  <!-- ── RESULT OUTRO ── -->
-  <section class="outro" id="outro" aria-hidden="true">
-    <div class="outro__inner">
-
-      <p class="outro__label">MISSION DEBRIEF</p>
-      <div class="finish-wrapper">
-        <button class="panel__cta finish-btn" id="finishBtn">
-          CHECK MY SCORE →
-        </button>
-      </div>
-
-      <div class="outro__score-display">
-        <span class="outro__score-num" id="outroScore">—</span>
-        <span class="outro__score-denom" id="outroTotal"></span>
-      </div>
-      <p class="outro__verdict" id="outroVerdict"></p>
-      <!-- <button class="outro__retry" onclick="location.reload()">RETRY MISSION</button> -->
-      <button class="outro__retry" id="mag1" onclick="resetExperience()">RETRY MISSION</button>
-
+<div class="outro__inner">
+    <p class="outro__label">MISSION DEBRIEF</p>
+    <div class="finish-wrapper">
+      <button class="finish-btn" id="finishBtn">CHECK MY SCORE →</button>
     </div>
-  </section>
-
-
-
-
-  <script src="gsap.min.js"></script>
-  <script src="ScrollTrigger.min.js"></script>
+<!-- OUTRO -->
+<section class="outro" id="outro" aria-hidden="true">
   
-  <script defer type="module" src="script.js"></script>
+    <div class="outro__score-display">
+      <span class="outro__score-num" id="outroScore">—</span>
+      <span class="outro__score-denom" id="outroTotal"></span>
+    </div>
+    <p class="outro__verdict" id="outroVerdict"></p>
+    <button class="outro__retry" id="retryBtn" onclick="resetExperience()">RETRY MISSION</button>
+  </div>
+</section>
 
+<!-- GSAP from CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<script>
+/* ─── QUIZ DATA — replace with your real questions ─── */
+const quizData = [
+{
+    question: 'Hamza secretly entered Pakistan from which direction?"?',
+    options: [
+      "China",
+      "Iran",
+      "Afganistan",
+      "Nepal"
+    ],
+    correctIndex: 2
+  },
+
+  {
+    question: 'Who delivers the chilling line: "Ghayal hoon, is liye ghatak hoon"?',
+    options: [
+      "Rehman Dakait",
+      "Hamza (Ranveer Singh)",
+      "Ajay Sanyal",
+      "Major Iqbal"
+    ],
+    correctIndex: 1
+  },
+  {
+    question: 'Complete the dialogue: "Rehman Dakait ki di huyi maut badi _______ hoti hai."',
+    options: [
+      "Dardnak (Painful)",
+      "Khaufnaak (Horrible)",
+      "Kasainuma (Merciless/Butcher-like)",
+      "Sasti (Cheap)"
+    ],
+    correctIndex: 2
+  },
+  {
+    question: "Which actor plays Major Iqbal?",
+    options: [
+      "Akshaye Khanna",
+      "Arjun Rampal",
+      "R. Madhavan",
+      "Ranveer Singh"
+    ],
+    correctIndex: 1
+  },
+  {
+    question: 'Complete: "Agar tumhare patakhe khatam ho gaye ho... main ________ shuru karu?"',
+    options: [
+      "Toofan",
+      "Khel",
+      "Dhamaka",
+      "Inteqam"
+    ],
+    correctIndex: 2
+  },
+  {
+    question: '"India ke sabse bade dushman, Hindustani khud hain." -Who said this?',
+    options: [
+      "Ajay Sanyal",
+      "Rehman Dakait",
+      "Hamza",
+      "Major Iqbal"
+    ],
+    correctIndex: 0
+  },
+];
+
+/* ─── CONSTANTS ─── */
+const PANEL_PALETTES = [
+  { from: '#0d0b08', to: '#1a1208' },
+  { from: '#08090d', to: '#0c0d18' },
+  { from: '#0d0808', to: '#1a0c0c' },
+  { from: '#070d09', to: '#0c1810' },
+  { from: '#0d0b0d', to: '#160c1a' },
+];
+const LETTERS = ['A','B','C','D','E'];
+const answers = new Array(quizData.length).fill(null);
+
+/* ─── GRAIN ─── */
+(function() {
+  const canvas = document.getElementById('grain');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+  function draw() {
+    const img = ctx.createImageData(w, h);
+    for (let i = 0; i < img.data.length; i += 4) {
+      const v = (Math.random() * 255) | 0;
+      img.data[i] = img.data[i+1] = img.data[i+2] = v;
+      img.data[i+3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    requestAnimationFrame(draw);
+  }
+  resize();
+  draw();
+  window.addEventListener('resize', resize);
+})();
+
+/* ─── BUILD PANELS ─── */
+const track = document.getElementById('storyTrack');
+
+quizData.forEach((q, idx) => {
+  const p = PANEL_PALETTES[idx % PANEL_PALETTES.length];
+  const panel = document.createElement('section');
+  panel.className = 'panel';
+  panel.dataset.index = idx;
+  panel.innerHTML = `
+    <div class="panel__background">
+      <div class="panel__bg-texture" style="background:radial-gradient(ellipse 80% 80% at 30% 40%,${p.to} 0%,${p.from} 100%);position:absolute;inset:0;"></div>
+      <div class="panel__bg-texture"><img src="assets/bg-${idx+1}.jpg" alt="" loading="lazy" decoding="async"/></div>
+    </div>
+    <div class="panel__scanlines" aria-hidden="true"></div>
+    <div class="panel__progress" aria-hidden="true">
+      <div class="panel__progress-fill"></div>
+    </div>
+    <div class="panel__side-label" aria-hidden="true">KEEP SCROLLING // DHURANDHAR FAN QUIZ BY SHASHKING // Q${String(idx+1).padStart(2,'0')} OF ${String(quizData.length).padStart(2,'0')}</div>
+    <div class="panel__content">
+      <p class="panel__eyebrow">Question ${String(idx+1).padStart(2,'0')} / ${String(quizData.length).padStart(2,'0')}</p>
+      <p class="panel__question" id="q-title-${idx}">${q.question}</p>
+      <div class="panel__options" role="group" aria-label="Answer options">
+        ${q.options.map((opt,i) => `
+          <label class="option-item" data-letter="${LETTERS[i]}" data-qi="${idx}" data-oi="${i}">
+            <input type="radio" name="q${idx}" value="${i}"/>${opt}
+          </label>`).join('')}
+      </div>
+    </div>`;
+  track.appendChild(panel);
+});
+
+/* ─── OPTION CLICK ─── */
+track.addEventListener('click', e => {
+  const label = e.target.closest('.option-item');
+  if (!label) return;
+  const qi = +label.dataset.qi;
+  const oi = +label.dataset.oi;
+  answers[qi] = oi;
+  label.closest('.panel').querySelectorAll('.option-item').forEach(o => o.classList.remove('selected'));
+  label.classList.add('selected');
+});
+
+/* ─── CLASSIFIED LINE BUILDER ───
+   Splits element text into visual lines by measuring word positions.
+   IMPORTANT: call this only while the element is in its natural layout
+   position (before any GSAP x offset). */
+function buildClassifiedLines(el) {
+  const text = el.textContent.trim();
+  if (!text) return null;
+
+  // Step 1: inject word spans
+  el.innerHTML = text.split(/\s+/).map(w => `<span class="cl-word">${w} </span>`).join('');
+
+  // Step 2: force reflow, read line positions
+  void el.offsetHeight;
+  const lineMap = new Map();
+  el.querySelectorAll('.cl-word').forEach(span => {
+    const top = Math.round(span.getBoundingClientRect().top);
+    lineMap.set(top, (lineMap.get(top) || '') + span.textContent);
+  });
+
+  const lines = [...lineMap.keys()].sort((a,b) => a-b).map(k => lineMap.get(k).trimEnd());
+
+  // Step 3: rebuild as classified wrappers
+  el.innerHTML = '';
+  lines.forEach(lineText => {
+    const wrap = document.createElement('div');
+    wrap.className = 'classified-line';
+    const inner = document.createElement('div');
+    inner.className = 'classified-line__inner';
+    inner.textContent = lineText;
+    const mask = document.createElement('div');
+    mask.className = 'classified-line__mask';
+    wrap.appendChild(inner);
+    wrap.appendChild(mask);
+    el.appendChild(wrap);
+  });
+
+  return {
+    inners: el.querySelectorAll('.classified-line__inner'),
+    masks:  el.querySelectorAll('.classified-line__mask'),
+  };
+}
+
+/* ─── MAIN INIT ───
+   Wait for fonts so Bebas Neue is applied before measuring line breaks. */
+window.addEventListener('load', () => {
+  gsap.registerPlugin(ScrollTrigger);
+
+  document.fonts.ready.then(() => {
+    initIntro();
+    initStory();
+  });
+
+  document.getElementById('startBtn').addEventListener('click', () => {
+    document.getElementById('storySection').scrollIntoView({ behavior: 'smooth' });
+  });
+
+  document.getElementById('finishBtn').addEventListener('click', onFinish);
+});
+
+/* ─── INTRO ANIMATION ─── */
+function initIntro() {
+  const els = document.querySelectorAll('.intro__content .js-classified');
+  const tl = gsap.timeline({ delay: 0.5 });
+
+  els.forEach((el, i) => {
+    const built = buildClassifiedLines(el);
+    if (!built) return;
+    const { inners, masks } = built;
+
+    // Set hidden state
+    gsap.set(inners, { opacity: 0, y: 12 });
+    gsap.set(masks,  { xPercent: 0, transformOrigin: 'right center' });
+
+    // Add to master timeline — each element starts after the previous
+    tl.to(masks,  { xPercent: -100, duration: 1.2, ease: 'expo.inOut', stagger: 0.25 }, i * 0.5)
+      .to(inners, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', stagger: 0.25 }, '<0.2');
+  });
+}
+
+/* ─── HORIZONTAL STORY ─── */
+function initStory() {
+  const storySection = document.getElementById('storySection'); // scroll height wrapper
+  const viewport     = document.getElementById('storyViewport'); // sticky element
+  const panels       = gsap.utils.toArray('.panel');
+  if (!panels.length) return;
+
+  const vw      = window.innerWidth;
+  const travel  = (panels.length - 1) * vw;  // total horizontal distance
+  const PACE    = 1.6;                         // scroll multiplier — more = slower pan
+
+  /* Size the track */
+  track.style.width = `${panels.length * 100}vw`;
+  panels.forEach((p, i) => { p.style.left = `${i * 100}vw`; });
+
+  /* Set storySection tall enough for the scroll distance */
+  storySection.style.height = `calc(${travel * PACE}px + 100vh)`;
+
+  /* Initial parallax states for backgrounds */
+  panels.forEach(p => {
+    const bg = p.querySelectorAll('.panel__bg-texture');
+    bg.forEach(b => gsap.set(b, { xPercent: -8, scale: 1.1 }));
+  });
+
+  /* ── Horizontal pan ScrollTrigger ── */
+  const hTween = gsap.to(track, {
+    x: -travel,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: storySection,
+      start: 'top top',
+      end: () => `+=${travel * PACE}`,
+      scrub: 1,
+      pin: viewport,        // pin the sticky viewport, not storySection
+      pinSpacing: false,    // storySection already provides the scroll space
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+    }
+  });
+
+  /* ── Per-panel setup ── */
+  panels.forEach((panel, idx) => {
+    const content  = panel.querySelector('.panel__content');
+    const question = panel.querySelector('.panel__question');
+    const options  = panel.querySelectorAll('.option-item');
+    const progFill = panel.querySelector('.panel__progress-fill');
+    const bgs      = panel.querySelectorAll('.panel__bg-texture');
+
+    /* Background parallax (scrubbed via containerAnimation) */
+    bgs.forEach(bg => {
+      gsap.to(bg, {
+        xPercent: 8,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: panel,
+          containerAnimation: hTween,
+          start: 'left right',
+          end:   'right left',
+          scrub: true,
+        }
+      });
+    });
+
+    /* Content parallax — moves faster than track, creating depth.
+       x: starts right-of-center, ends left-of-center as panel scrolls through. */
+    if (content) {
+      // Set starting position (will be overridden by scrub)
+      gsap.set(content, { x: vw * 0.15 });
+      gsap.to(content, {
+        x: -vw * 0.15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: panel,
+          containerAnimation: hTween,
+          start: 'left right',
+          end:   'right left',
+          scrub: true,
+        }
+      });
+    }
+
+    /* Progress bar */
+    if (progFill) {
+      ScrollTrigger.create({
+        trigger: panel,
+        containerAnimation: hTween,
+        start: 'left 55%',
+        onEnter: () => gsap.to(progFill, { scaleX: (idx+1)/panels.length, duration: 0.8, ease: 'power2.out' }),
+      });
+    }
+
+    /* ── Classified question reveal ──
+       Build lines NOW (fonts loaded, no x offset yet) then animate on scroll. */
+    if (question) {
+      const built = buildClassifiedLines(question);
+      if (!built) return;
+      const { inners, masks } = built;
+
+      gsap.set(inners,  { opacity: 0, yPercent: 35 });
+      gsap.set(masks,   { xPercent: 0, transformOrigin: 'right center' });
+      gsap.set(options, { opacity: 0, y: 8 });
+
+      const revealTl = gsap.timeline({ paused: true });
+      revealTl
+        .to(masks,   { xPercent: -100, duration: 0.7, ease: 'power3.inOut', stagger: 0.1 })
+        .to(inners,  { opacity: 1, yPercent: 0, duration: 0.5, ease: 'power2.out', stagger: 0.1 }, '<0.1')
+        .to(options, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out', stagger: 0.05 }, '-=0.1');
+
+      if (idx === 0) {
+        /* First panel is already visible — play immediately after font+layout settle */
+        gsap.delayedCall(0.4, () => revealTl.play());
+      } else {
+        ScrollTrigger.create({
+          trigger: panel,
+          containerAnimation: hTween,
+          start: 'left 65%',
+          toggleActions: 'play reverse none reset',
+          onEnter:     () => revealTl.play(),
+          onLeaveBack: () => revealTl.reverse(),
+        });
+      }
+    }
+  });
+
+  /* Pulse finish button when user has scrolled through all panels */
+  ScrollTrigger.create({
+    trigger: storySection,
+    start: 'bottom bottom',
+    once: true,
+    onEnter: () => gsap.to('#finishBtn', { scale: 1.08, repeat: 3, yoyo: true, duration: 0.35 }),
+  });
+
+  ScrollTrigger.refresh();
+}
+
+/* ─── FINISH BUTTON ─── */
+function onFinish() {
+  const btn = document.getElementById('finishBtn');
+  btn.disabled = true;
+  btn.textContent = 'INTEL PROCESSED';
+
+  // Lock track
+  track.style.pointerEvents = 'none';
+
+  // Mark answers
+  quizData.forEach((q, i) => {
+    document.querySelectorAll(`.option-item[data-qi="${i}"]`).forEach(opt => {
+      opt.style.cursor = 'default';
+    });
+    const choice = answers[i];
+    if (choice !== null) {
+      const el = document.querySelector(`.option-item[data-qi="${i}"][data-oi="${choice}"]`);
+      if (el) {
+        el.classList.remove('selected');
+        el.classList.add(choice === q.correctIndex ? 'correct' : 'wrong');
+      }
+    }
+  });
+
+  setTimeout(() => {
+    showOutro();
+    document.getElementById('outro').scrollIntoView({ behavior: 'smooth' });
+  }, 700);
+}
+
+/* ─── OUTRO / SCORE ─── */
+function showOutro() {
+  const score   = answers.reduce((acc, a, i) => acc + (a === quizData[i].correctIndex ? 1 : 0), 0);
+  const total   = quizData.length;
+  const ratio   = score / total;
+  const outro   = document.getElementById('outro');
+  const numEl   = document.getElementById('outroScore');
+  const denomEl = document.getElementById('outroTotal');
+  const verdict = document.getElementById('outroVerdict');
+  const retry   = document.getElementById('retryBtn');
+
+  denomEl.textContent = `/ ${total}`;
+  verdict.textContent =
+    ratio === 1    ? "Perfect score! You must have REALLY seen it 4 times." :
+    ratio >= 0.7   ? "Not bad, but a rewatch is recommended." :
+    ratio >= 0.4   ? "Friend… you missed all the details. Return to the field right NOW!" :
+                     "Were you on your phone during the movie?? Retry mission now!";
+
+  outro.removeAttribute('aria-hidden');
+  outro.style.display = 'flex';
+
+  gsap.set(numEl, { y: 40, opacity: 0 });
+  gsap.to(numEl, { y: 0, opacity: 1, duration: 0.6 });
+
+  const counter = { val: 0 };
+  gsap.to(counter, {
+    val: score,
+    duration: 1.4,
+    ease: 'power2.out',
+    onUpdate: () => { numEl.textContent = Math.round(counter.val); },
+    onComplete: () => {
+      gsap.to(retry, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
+        onComplete: () => { retry.style.pointerEvents = 'auto'; }
+      });
+    }
+  });
+}
+
+/* ─── RESET ─── */
+function resetExperience() {
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  setTimeout(() => location.reload(), 50);
+}
+</script>
 </body>
-
 </html>

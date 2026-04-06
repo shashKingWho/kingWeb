@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShashKing portfolio content</title>
+
+    <style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+  /* mmmmmmmmmmmmmm */
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            font-family: 'Bebas Neue', sans-serif;
+            text-decoration: none;
+            color: var(--b4);
+            border: 2px solid var(--b4);
+            padding: 10px 20px;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background: var(--b4);
+            color: var(--cream);
+        }
+
+        /* mmmmmmmmmmmmmmmmmmm */
+  :root {
+    --b1: #fe3424; /* Red */
+    --b2: #fdbf36; /* Yellow */
+    --b3: #1e69aa; /* Blue */
+    --b4: #0d0d0d; /* Black */
+    --cream: #f5f0e8;
+  }
+
+  body { background: var(--cream); font-family: 'Bebas Neue', sans-serif; color: var(--b4); }
+
+  .portfolio-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .category-header {
+    background: var(--b4);
+    color: var(--cream);
+    padding: 10px 20px;
+    margin: 40px 0 20px 0;
+    display: inline-block;
+    letter-spacing: 2px;
+    border-left: 10px solid var(--b1);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  /* Bauhaus Video/Link Card */
+  .card {
+    background: var(--cream);
+    border: 4px solid var(--b4);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  .card:hover { transform: translateY(-5px); }
+
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    background: var(--b4);
+  }
+  .video-container iframe {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border: none;
+  }
+
+  .card-info {
+    padding: 15px;
+    border-top: 4px solid var(--b4);
+    background: var(--cream);
+  }
+
+  .card-label {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    color: var(--b4);
+  }
+
+  /* Geometric Accent for non-video cards */
+  .thumb-card {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--b2);
+    text-decoration: none;
+    color: var(--b4);
+    font-size: 2rem;
+    position: relative;
+  }
+  .thumb-card.blue { background: var(--b3); color: var(--cream); }
+  .thumb-card.red { background: var(--b1); color: var(--cream); }
+
+  .dot-accent {
+    position: absolute;
+    width: 40px; height: 40px;
+    background: var(--b4);
+    border-radius: 50%;
+    bottom: 10px; right: 10px;
+  }
+
+  /* mmmmmmmmmmmmm */
+  
+  /* ── CONTACT ── */
+  .bh-contact {
+    background: var(--b4);
+    padding: 3rem;
+    border-top: 6px solid var(--b1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .bh-contact h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    letter-spacing: 0.1em;
+    color: var(--cream);
+  }
+
+  .bh-contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .bh-contact-links a {
+    font-size: 14px;
+    color: #bbb;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    padding-left: 1rem;
+    border-left: 3px solid var(--b2);
+  }
+
+  .bh-contact-links a:hover {
+    color: var(--b2);
+  }
+
+  /* ── FOOTER ── */
+  .bh-footer {
+    background: var(--b4);
+    color: #555;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 1rem;
+    border-top: 2px solid #222;
+  }
+
+  .bh-footer span {
+    color: var(--b1);
+  }
+</style>
+
+</head>
+<body>
+    
+
+<div class="portfolio-container">
+  
+  <h2 class="category-header">ANIMATION & PIXEL ART</h2>
+  <div class="work-grid">
+    <div class="card">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/SL90jmuHjQc"
+        referrerpolicy="strict-origin-when-cross-origin"
+         allowfullscreen></iframe>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Animated Advertisement</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/Ou-LNfSWlSY" 
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Krrish Parody</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/cKKkYBYvwSQ" 
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Pixel Art: Barney Is a Jerk</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="category-header">VFX & CINEMATOGRAPHY</h2>
+  <div class="work-grid">
+    <div class="card">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/Acsh3G-fJEE" 
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Real Life PUBG meets Pikachu</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="category-header">VR & 360° EXPERIENCES</h2>
+  <div class="work-grid">
+    <div class="card">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/XSKie6720n8" 
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="card-info">
+        <div class="card-label">VR Editing @ JLF Event</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/BjYT5WjR5kc"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="card-info">
+        <div class="card-label">VR Biology Education</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/ib9qODUJK3k"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Steamdeck in Metaverse (360°)</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/lzAOZf2VgMg"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+      <div class="card-info">
+        <div class="card-label">shashKing vs Zombies Trailer</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="category-header">INTERACTIVE & DESIGN</h2>
+  <div class="work-grid">
+    <a href="https://shashking.com/dhurandar-fan-quiz/index.html" target="_blank" class="card" style="text-decoration:none;">
+      <div class="thumb-card blue">
+        INTERACTIVE QUIZ
+        <div class="dot-accent" style="background:var(--b2)"></div>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Gamification: GSAP & Lottie</div>
+      </div>
+    </a>
+    <a href="https://www.deviantart.com/tag/shashking" target="_blank" class="card" style="text-decoration:none;">
+      <div class="thumb-card red">
+        ILLUSTRATIONS
+        <div class="dot-accent"></div>
+      </div>
+      <div class="card-info">
+        <div class="card-label">Photoshop & Affinity Gallery</div>
+      </div>
+    </a>
+  </div>
+
+  <div>
+  <a href="../index.html" class="back-btn">Back to Portfolio</a>
+        </div>
+
+</div>
+
+
+  <div class="bh-contact" id="contact">
+    <h2>Get<br>In<br>Touch</h2>
+    <div class="bh-contact-links">
+      <a href="mailto:shashaankinbox@gmail.com" target="_blank">shashaankinbox@gmail.com</a>
+      <a href="https://www.linkedin.com/in/shashking/" target="_blank">linkedin.com/in/shashking</a>
+      <a href="https://www.instagram.com/shashking/" target="_blank">instagram.com/shashking</a>
+    </div>
+  </div>
+
+  <div class="bh-footer">© 2025 <span>shashKing</span> — All Rights Reserved</div>
+</div>
+
+
+</body>
+</html>
