@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indie Logic Core | Project Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --b1: #fe3424;
+            --b2: #fdbf36;
+            --b3: #1e69aa;
+            --b4: #0d0d0d;
+            --cream: #f5f0e8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--cream);
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--b4);
+            overflow-x: hidden;
+        }
+
+        /* Bauhaus Header */
+        .bauhaus-header {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            border-bottom: 8px solid var(--b4);
+        }
+
+        .cell {
+            aspect-ratio: 1;
+            position: relative;
+            border-right: 2px solid var(--b4);
+        }
+
+        .cell.red {
+            background: var(--b1);
+        }
+
+        .cell.yellow {
+            background: var(--b2);
+        }
+
+        .cell.blue {
+            background: var(--b3);
+        }
+
+        .circle {
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            background: var(--cream);
+            position: absolute;
+            top: 10%;
+            left: 10%;
+        }
+
+        /* ── LAYOUT ── */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 100vh;
+        }
+
+        /* ── SIDEBAR (PROJECT BRIEF) ── */
+        .sidebar {
+            flex: 1;
+            min-width: 350px;
+            padding: 40px;
+            background: var(--b4);
+            color: var(--cream);
+            display: flex;
+            flex-direction: column;
+            border-right: 8px solid var(--b4);
+        }
+
+        .sidebar h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5.5rem;
+            line-height: 0.85;
+            margin-bottom: 20px;
+        }
+
+        .sidebar h2 {
+            color: var(--b2);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2rem;
+            margin-top: 20px;
+            border-bottom: 2px solid var(--b2);
+        }
+
+        .architecture-display {
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .arch-tag {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--b3);
+            color: white;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .feature-list {
+            /* list-style: none; */
+            margin-top: 15px;
+        }
+
+        .feature-list li {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #333;
+            padding-bottom: 4px;
+        }
+
+        .feature-list li span {
+            color: var(--b2);
+            font-weight: bold;
+        }
+
+        .udyam-box {
+            margin-top: auto;
+            padding-top: 40px;
+            font-size: 0.75rem;
+            opacity: 0.8;
+            letter-spacing: 1px;
+            line-height: 1.6;
+        }
+
+        /* ── FORM SECTION ── */
+        .form-section {
+            flex: 2;
+            min-width: 400px;
+            padding: 60px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+            border-bottom: 4px solid var(--b4);
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        input,
+        select {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 10px 0;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            outline: none;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--b1);
+        }
+
+        /* ── DYNAMIC SUMMARY ── */
+        .summary-box {
+            margin-top: 40px;
+            background: var(--b4);
+            color: white;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: relative;
+        }
+
+        .summary-details {
+            font-size: 1.1rem;
+        }
+
+        .summary-details div {
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+
+        .summary-details span {
+            font-weight: bold;
+            color: var(--b2);
+        }
+
+        .total-price {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 5rem;
+            line-height: 1;
+            color: var(--b3);
+        }
+
+        button {
+            width: 100%;
+            padding: 25px;
+            background: var(--b1);
+            color: white;
+            border: none;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.2rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: var(--b3);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar h1 {
+                font-size: 4rem;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="bauhaus-header">
+        <div class="cell red"></div>
+        <div class="cell yellow">
+            <div class="circle"></div>
+        </div>
+        <div class="cell black"></div>
+        <div class="cell blue"></div>
+        <div class="cell">
+            <div class="circle" style="background:var(--b1)"></div>
+        </div>
+        <div class="cell yellow"></div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h1>Project<br>Cost<br>Calculator</h1>
+
+            <div id="arch-brief" class="architecture-display">
+                <div class="arch-tag" id="arch-title">LEAN MVP - ₹37,000</div>
+                <p id="arch-desc">This is Basic Marketplace, a visual storefront for your products. Perfect foundation
+                    to build on using the addons.</p>
+
+                <h2>Technical Breakdown</h2>
+                <ul class="feature-list" id="feature-items">
+                </ul>
+            </div>
+
+            <div class="udyam-box">
+                <strong>INDIE LOGIC CORE</strong><br>
+                UDYAM-RJ-17-0606241<br>
+                EST. 2026 | BESPOKE SYSTEMS
+            </div>
+        </aside>
+
+        <main class="form-section">
+            <div class="form-group">
+                <label>Client Identity</label>
+                <input type="text" id="name" placeholder="YOUR NAME">
+            </div>
+
+            <div class="form-group">
+                <label>Selected Architecture</label>
+                <div style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--b3);">
+                    LEAN E-COMMERCE - ₹37,000
+                </div>
+                <select id="plan" onchange="updateUI()" style="display: none;">
+                    <option value="37000"></option>
+                </select>
+            </div>
+
+            <label>Addons / Extra Functionality</label>
+            <div class="options-grid">
+
+                <label class="option-item">
+                    <input type="checkbox" class="addon" value="4000" onchange="updateUI()">
+                    <span>Multi Admin (Role-based)</span>
+                    <span>₹4,000</span>
+                </label>
+                <label class="option-item">
+
+                    <input type="checkbox" class="addon" value="15000" onchange="updateUI()">
+                    <span>Interactive Motion Graphics</span>
+
+                    <span>₹15,000</span>
+                </label>
+
+                <label class="option-item">
+                    <input type="checkbox" class="addon" value="6000" onchange="updateUI()">
+                    <span>Analytics Dashboard</span>
+                    <span>₹6,000</span>
+                </label>
+
+                <label class="option-item">
+                    <input type="checkbox" class="addon" value="4000" onchange="updateUI()">
+                    <span>Advanced Search Filters for the products</span>
+                    <span>₹4,000</span>
+                </label>
+
+                <label class="option-item">
+                    <input type="checkbox" class="addon" value="5000" onchange="updateUI()">
+                    <span>Vendor Analytics</span>
+                    <span>₹5,000</span>
+                </label>
+
+                <label class="option-item">
+                    <input type="checkbox" class="addon" value="8000" onchange="updateUI()">
+                    <span>Bespoke AI Chatbot</span>
+                    <span>₹8,000</span>
+                </label>
+
+                <label class="option-item">
+                    <input type="checkbox" class="addon" value="3000" onchange="updateUI()">
+                    <span>Remove Product Limit</span>
+                    <span>₹3,000</span>
+                </label>
+
+                <label class="option-item">
+                    <input type="checkbox" class="addon" value="4000" onchange="updateUI()">
+                    <span>Wishlist, Reviews & Ratings</span>
+                    <span>₹4,000</span>
+                </label>
+
+                <label class="option-item">
+                    <input type="checkbox" class="addon" value="3000" onchange="updateUI()">
+                    <span>Coupons System</span>
+                    <span>₹3,000</span>
+                </label>
+            </div>
+
+
+
+            <div class="summary-box">
+                <div class="summary-details">
+                    <div>Base + Addons: <span id="val-base">₹0</span></div>
+                    <div>GST (18%): <span id="val-gst">₹0</span></div>
+                    <div style="font-size: 0.8rem; margin-top: 10px;">FINAL PAYABLE AMOUNT (without hosting)</div>
+                </div>
+                <div class="total-price" id="display-total">₹0</div>
+            </div>
+
+            <button onclick="sendWhatsApp()">Proceed to Checkout</button>
+
+            <div class="form-group" style="border: 2px solid var(--b4); padding: 15px; margin: 0;">
+                <small>Platform hosting is a recurring cost (unlike the build fee above) and is "System Vital"</small>
+                <label>Platform Hosting + Maintenance</label>
+                <select id="hosting" onchange="updateUI()">
+                    <option value="9000">1 Year (₹750/mo) - ₹9,000</option>
+                    <option value="18000">2 Years (₹750/mo) - ₹18,000</option>
+                </select>
+            </div>
+
+        </main>
+
+
+    </div>
+
+
+
+    <script>
+
+        const architectureData = {
+            "37000": {
+                title: "LEAN E-COMMERCE - ₹37,000",
+                desc: "This is Basic Marketplace, a visual storefront for your products. Perfect foundation to build on using the addons.",
+                features: [
+                    "Brand UI Layer",
+                    "Product Logic with drag & drop",
+                    "Add upto 20 SKU",
+                    "Basic Cart & cheackout system",
+                    "Payment Gateway - Razorpay ",
+                    "Customer Dashboard",
+                    "Core Admin Panel",
+                    "Testing & Deployment"
+                ]
+            }
+        };
+
+        function updateUI() {
+             const planSelect = document.getElementById('plan');
+        const planValue = planSelect ? planSelect.value : "37000"; 
+        const data = architectureData[planValue];
+
+            if (!data) return; // Safety check
+
+            // Update Sidebar Text
+            document.getElementById('arch-title').innerText = data.title;
+            document.getElementById('arch-desc').innerText = data.desc;
+
+            // Update Sidebar Feature List
+            const list = document.getElementById('feature-items');
+            list.innerHTML = '';
+            // .forEach for the Array
+            data.features.forEach(feature => {
+                list.innerHTML += `<li>${feature}</li>`;
+            });
+
+            // --- CALCULATIONS ---
+
+            // 1. Base Price
+            let basePrice = parseInt(planValue);
+
+            // 2. Addons (GSAP / Interactive)
+            let addonPrice = 0;
+            document.querySelectorAll('.addon:checked').forEach(cb => {
+                addonPrice += parseInt(cb.value);
+            });
+
+            // 3. Hosting (Crucial: Adding the value to the math)
+            const hostSelect = document.getElementById('hosting');
+            let hostingPrice = parseInt(hostSelect.value);
+
+            // 4. Totals
+            const subtotal = basePrice + addonPrice; // + hostingPrice;
+            const gst = subtotal * 0.18;
+            const total = subtotal + gst;
+
+            // Update Display Fields
+            document.getElementById('val-base').innerText = '₹' + (basePrice + addonPrice).toLocaleString();
+            // Showing hosting separately or combined? Let's show the full build + hosting subtotal
+            document.getElementById('val-gst').innerText = '₹' + Math.round(gst).toLocaleString();
+            document.getElementById('display-total').innerText = '₹' + Math.round(total).toLocaleString();
+        }
+
+
+
+        // send msg
+        function sendWhatsApp() {
+        try {
+
+            // const name = document.getElementById('name').value || "Inquirer";
+           // Validation: Stop if name is empty
+        const nameField = document.getElementById('name');
+        const name = nameField.value.trim();
+        
+        if (!name) {
+            alert("Please enter your name to proceed.");
+            nameField.focus(); // Highlights the name box for the user
+            return; // Stops the function here
+        }
+
+
+            const total = document.getElementById('display-total').innerText;
+
+            // Update this number as needed (must include 91)
+        const salesPhone = "919829345674";
+
+            // Capture selected Addon names
+        let selectedAddons = [];
+        document.querySelectorAll('.addon:checked').forEach(cb => {
+            // This grabs the first <span> (the name) next to the checkbox
+            const addonName = cb.parentElement.querySelector('span').innerText;
+            selectedAddons.push("- " + addonName);
+        });
+
+        // Create a string of addons or a default message if none selected
+        const addonsList = selectedAddons.length > 0 
+            ? selectedAddons.join("\n") 
+            : "- No Addons Selected";
+
+
+            // Grab Hosting Text
+            const hostSelect = document.getElementById('hosting');
+            const hostText = hostSelect.options[hostSelect.selectedIndex].text;
+
+            // Construct Message
+            const msg = `INDIE LOGIC CORE: LEAN BUILD
+------------------
+CLIENT: ${name}
+PLAN: LEAN E-COMM (₹37,000)
+SELECTED ADDONS:
+${addonsList}
+SYSTEM VITAL: ${hostText} (Billed Separately)
+------------------
+BUILD TOTAL (incl. 18% GST): ${total}
+------------------
+UDYAM: UDYAM-RJ-17-0606241`;
+
+            window.open(`https://wa.me/918560085611?text=${encodeURIComponent(msg)}`);
+         } catch (error) {
+            console.error("WhatsApp Link Error:", error);
+            alert("Please ensure all fields are filled correctly.");
+        }
+    }
+
+        // Initialize on load
+        window.onload = updateUI;
+    </script>
+</body>
+
+</html>
