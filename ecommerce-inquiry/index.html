@@ -241,14 +241,40 @@
         }
 
         @media (max-width: 768px) {
-            .sidebar h1 {
-                font-size: 4rem;
-            }
+    /* Stack the sidebar and form vertically */
+    .container {
+        flex-direction: column;
+    }
 
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+    .sidebar h1 {
+        font-size: 4rem;
+    }
+
+    .form-section {
+        padding: 30px 20px;
+        min-width: 100%;
+    }
+
+    /* Fix the Summary Box popping issue */
+    .summary-box {
+        flex-direction: column; /* Stack details and price */
+        align-items: flex-start; /* Align to the left */
+        gap: 15px;
+        padding: 20px;
+    }
+
+    /* Target the price specifically */
+    div#display-total.total-price {
+        font-size: 3.5rem; /* Reduced from 5rem to fit mobile */
+        width: 100%;
+        word-wrap: break-word; /* Safety net for long numbers */
+        text-align: left;
+    }
+
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+}
     </style>
 </head>
 
