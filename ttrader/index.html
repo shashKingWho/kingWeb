@@ -152,8 +152,46 @@ input[type="number"]:focus, input[type="text"]:focus {
   color:#fff;
   cursor:grab;
   user-select:none;
+  touch-action:none;
+  -webkit-user-select:none;
 }
 .hour-block:active { cursor:grabbing; }
+.hour-block.is-dragging-source { opacity:0.35; }
+
+/* Ghost clones used for touch/mouse pointer dragging */
+.block-ghost, .card-ghost {
+  transition:none !important;
+}
+
+/* Locks page scroll while an active pointer drag is in progress */
+.app-wrapper.drag-lock {
+  overflow-y:hidden;
+  touch-action:none;
+}
+
+/* Placeholder shown in the task list while a card is being reordered */
+.task-card-placeholder {
+  border:1px dashed rgba(0,218,240,0.5);
+  border-radius:4px;
+  background:rgba(0,218,240,0.06);
+}
+
+/* Grip handle hint on task cards */
+.task-grip {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:3px;
+  padding:0 4px;
+  color:rgba(0,218,240,0.45);
+  font-size:14px;
+  letter-spacing:2px;
+  line-height:0.6;
+  touch-action:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
 
 /* ── TASK MATRIX WORKSPACE ───────────────────────────────────────────── */
 .workspace-grid {
@@ -246,14 +284,20 @@ input[type="number"]:focus, input[type="text"]:focus {
 
 <canvas id="cv"></canvas>
 
-<div class="app-wrapper">
+<div class="app-wrapper" id="app-wrapper">
   <div class="app-container">
-    
+
     <header>
       <div class="eyebrow">Visual Human Capital Allocation Matrix</div>
       <div class="title">TIME <span>TRADER</span></div>
     </header>
-
+<div class="neon-panel flex-row-panel">
+  <span>
+        This little Time Block visualizer was made especially for my cutest little sister. She needed something simple for her tablet, and since I can't build an iPad app without a Mac, I made it available on the web instead. No downloads, no installation—just open it whenever she need it.
+        
+    </span>
+    <span>❤️ from Bhiya</span>
+</div>
     <div class="neon-panel flex-row-panel">
       <div class="input-group">
         <label for="hours-to-mint">Awake Cycle Capacity</label>
@@ -273,7 +317,7 @@ input[type="number"]:focus, input[type="text"]:focus {
     </div>
 
     <div class="workspace-grid">
-      
+
       <div class="neon-panel">
         <div class="panel-title">Commit Operation</div>
         <div class="form-layout">
@@ -499,8 +543,8 @@ requestAnimationFrame(animate);
 
 
 // ── SECTION 2: INTERACTIVE LOGIC DATA ENGINES ─────────────────────────
-let globalHours = []; 
-let taskLedger = []; 
+let globalHours = [];
+let taskLedger = [];
 let blockIdCounter = 0;
 
 const reservoirElement = document.getElementById('global-hour-reservoir');
@@ -511,12 +555,40 @@ const btnAddTask = document.getElementById('add-task-btn');
 const inputTaskName = document.getElementById('new-task-name');
 const inputTaskHours = document.getElementById('new-task-hours');
 const todoContainer = document.getElementById('todo-list-element');
+const appWrapper = document.getElementById('app-wrapper');
+
+// ── Shared pointer-drag helpers (touch + mouse, phone-friendly) ───────
+function lockScroll() { appWrapper.classList.add('drag-lock'); }
+function unlockScroll() { appWrapper.classList.remove('drag-lock'); }
+
+function findTaskCardAt(x, y) {
+  const stack = document.elementsFromPoint ? document.elementsFromPoint(x, y) : [document.elementFromPoint(x, y)];
+  for (const el of stack) {
+    if (!el) continue;
+    if (el.classList && (el.classList.contains('block-ghost') || el.classList.contains('card-ghost'))) continue;
+    const card = el.closest ? el.closest('.task-card') : null;
+    if (card) return card;
+  }
+  return null;
+}
+
+function clearBlockDropHighlight() {
+  document.querySelectorAll('.task-card.drag-over').forEach(c => c.classList.remove('drag-over'));
+}
+
+function updateBlockDropHighlight(x, y) {
+  clearBlockDropHighlight();
+  const card = findTaskCardAt(x, y);
+  if (card && !card.classList.contains('completed')) {
+    card.classList.add('drag-over');
+  }
+}
 
 // Mint Hour Blocks into state arrays
 function initializeHourReservoir(amount) {
   reservoirElement.innerHTML = '';
   globalHours = [];
-  
+
   for(let i = 0; i < amount; i++) {
     const blockId = `block-id-${blockIdCounter++}`;
     globalHours.push(blockId);
@@ -529,19 +601,91 @@ function renderBlockInReservoir(id) {
   const block = document.createElement('div');
   block.className = 'hour-block';
   block.id = id;
-  block.draggable = true;
   block.innerText = '1H';
 
-  block.addEventListener('dragstart', (e) => {
-    block.classList.add('dragging');
-    e.dataTransfer.setData('text/plain', block.id);
-  });
-
-  block.addEventListener('dragend', () => {
-    block.classList.remove('dragging');
-  });
+  attachBlockPointerDrag(block, id);
 
   reservoirElement.appendChild(block);
+}
+
+// Touch/mouse pointer-based drag for hour blocks -> task cards
+function attachBlockPointerDrag(block, id) {
+  block.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+
+    const startX = e.clientX, startY = e.clientY;
+    const threshold = 6;
+    let dragging = false;
+    let ghost = null;
+
+    function onMove(ev) {
+      const dx = ev.clientX - startX, dy = ev.clientY - startY;
+
+      if (!dragging) {
+        if (Math.abs(dx) > threshold || Math.abs(dy) > threshold) {
+          dragging = true;
+          lockScroll();
+          const rect = block.getBoundingClientRect();
+          ghost = block.cloneNode(true);
+          ghost.classList.add('block-ghost');
+          ghost.style.position = 'fixed';
+          ghost.style.left = rect.left + 'px';
+          ghost.style.top = rect.top + 'px';
+          ghost.style.width = rect.width + 'px';
+          ghost.style.height = rect.height + 'px';
+          ghost.style.margin = '0';
+          ghost.style.pointerEvents = 'none';
+          ghost.style.zIndex = '9999';
+          ghost.style.opacity = '0.9';
+          ghost.style.transform = 'scale(1.1)';
+          ghost.style.boxShadow = '0 8px 30px rgba(0,218,240,0.6)';
+          document.body.appendChild(ghost);
+          block.classList.add('is-dragging-source');
+        } else {
+          return;
+        }
+      }
+
+      ev.preventDefault();
+      const gw = ghost.offsetWidth, gh = ghost.offsetHeight;
+      ghost.style.left = (ev.clientX - gw / 2) + 'px';
+      ghost.style.top = (ev.clientY - gh / 2) + 'px';
+      updateBlockDropHighlight(ev.clientX, ev.clientY);
+    }
+
+    function finish(ev) {
+      document.removeEventListener('pointermove', onMove);
+      document.removeEventListener('pointerup', onUp);
+      document.removeEventListener('pointercancel', onCancel);
+
+      if (dragging) {
+        unlockScroll();
+        clearBlockDropHighlight();
+        if (ghost) { ghost.remove(); ghost = null; }
+        block.classList.remove('is-dragging-source');
+
+        const dropCard = ev ? findTaskCardAt(ev.clientX, ev.clientY) : null;
+        if (dropCard) {
+          const taskId = dropCard.dataset.id;
+          const task = taskLedger.find(t => t.id === taskId);
+          if (task && !task.isComplete && globalHours.includes(id)) {
+            globalHours = globalHours.filter(x => x !== id);
+            task.allocatedBlockIds.push(id);
+            block.remove();
+            syncReservoirMetrics();
+            renderTaskLedger();
+          }
+        }
+      }
+    }
+
+    function onUp(ev) { finish(ev); }
+    function onCancel(ev) { finish(null); }
+
+    document.addEventListener('pointermove', onMove, { passive: false });
+    document.addEventListener('pointerup', onUp);
+    document.addEventListener('pointercancel', onCancel);
+  });
 }
 
 function syncReservoirMetrics() {
@@ -595,33 +739,6 @@ function renderTaskLedger() {
     card.className = `task-card ${task.isComplete ? 'completed' : ''}`;
     card.dataset.id = task.id;
 
-    // Direct Drag-and-Drop mapping parameters per row
-    card.addEventListener('dragover', (e) => {
-      if(!task.isComplete) {
-        e.preventDefault();
-        card.classList.add('drag-over');
-      }
-    });
-
-    card.addEventListener('dragleave', () => card.classList.remove('drag-over'));
-
-    card.addEventListener('drop', (e) => {
-      e.preventDefault();
-      card.classList.remove('drag-over');
-      
-      const droppedBlockId = e.dataTransfer.getData('text/plain');
-      const blockDom = document.getElementById(droppedBlockId);
-
-      // Verify origin validation status matches global pool arrays
-      if(blockDom && globalHours.includes(droppedBlockId)) {
-        globalHours = globalHours.filter(id => id !== droppedBlockId);
-        task.allocatedBlockIds.push(droppedBlockId);
-        blockDom.remove();
-        syncReservoirMetrics();
-        renderTaskLedger();
-      }
-    });
-
     // Populate visual timeline blocks assigned inside item context
     let localBlocksMarkup = '';
     task.allocatedBlockIds.forEach(() => {
@@ -629,6 +746,7 @@ function renderTaskLedger() {
     });
 
     card.innerHTML = `
+      <div class="task-grip" title="Hold &amp; drag to reorder">&#8942;&#8942;</div>
       <div class="task-info">
         <span class="task-title">${task.title}</span>
         <div class="task-allocated-blocks">
@@ -700,8 +818,118 @@ function renderTaskLedger() {
       renderTaskLedger();
     });
 
+    // Hold-and-drag reordering of task cards (touch + mouse)
+    attachTaskCardReorderDrag(card, task);
+
     todoContainer.appendChild(card);
   });
+}
+
+// Long-press (hold) then drag to reorder task cards up/down in the ledger
+function attachTaskCardReorderDrag(card, task) {
+  const LONG_PRESS_MS = 320;
+  const MOVE_CANCEL_THRESHOLD = 10;
+
+  card.addEventListener('pointerdown', (e) => {
+    // Don't hijack taps on interactive controls inside the card
+    if (e.target.closest('button, label, input, .checkbox-container')) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+
+    const startX = e.clientX, startY = e.clientY;
+    let moved = false;
+    let longPressTimer = null;
+
+    function cancelPress() {
+      clearTimeout(longPressTimer);
+      document.removeEventListener('pointermove', onPreMove);
+      document.removeEventListener('pointerup', onPreUp);
+      document.removeEventListener('pointercancel', onPreUp);
+    }
+
+    function onPreMove(ev) {
+      if (Math.abs(ev.clientX - startX) > MOVE_CANCEL_THRESHOLD || Math.abs(ev.clientY - startY) > MOVE_CANCEL_THRESHOLD) {
+        moved = true;
+        cancelPress();
+      }
+    }
+    function onPreUp() { cancelPress(); }
+
+    document.addEventListener('pointermove', onPreMove);
+    document.addEventListener('pointerup', onPreUp);
+    document.addEventListener('pointercancel', onPreUp);
+
+    longPressTimer = setTimeout(() => {
+      cancelPress();
+      if (moved) return;
+      startCardDrag(e, card, startX, startY);
+    }, LONG_PRESS_MS);
+  });
+}
+
+function startCardDrag(e, card, startX, startY) {
+  if (navigator.vibrate) { try { navigator.vibrate(15); } catch (err) {} }
+
+  lockScroll();
+
+  const rect = card.getBoundingClientRect();
+  const offsetX = startX - rect.left;
+  const offsetY = startY - rect.top;
+
+  const ghost = card.cloneNode(true);
+  ghost.classList.add('card-ghost');
+  ghost.style.position = 'fixed';
+  ghost.style.left = rect.left + 'px';
+  ghost.style.top = rect.top + 'px';
+  ghost.style.width = rect.width + 'px';
+  ghost.style.margin = '0';
+  ghost.style.zIndex = '9999';
+  ghost.style.pointerEvents = 'none';
+  ghost.style.boxShadow = '0 10px 40px rgba(0,218,240,0.5)';
+  ghost.style.transform = 'scale(1.03)';
+  document.body.appendChild(ghost);
+
+  const placeholder = document.createElement('div');
+  placeholder.className = 'task-card-placeholder';
+  placeholder.style.height = rect.height + 'px';
+  card.parentNode.insertBefore(placeholder, card);
+  card.style.display = 'none';
+
+  function onMove(ev) {
+    ev.preventDefault();
+    ghost.style.left = (ev.clientX - offsetX) + 'px';
+    ghost.style.top = (ev.clientY - offsetY) + 'px';
+
+    const overCard = findTaskCardAt(ev.clientX, ev.clientY);
+    if (overCard && overCard !== card && !overCard.classList.contains('card-ghost') && todoContainer.contains(overCard)) {
+      const overRect = overCard.getBoundingClientRect();
+      const isAfter = ev.clientY > overRect.top + overRect.height / 2;
+      todoContainer.insertBefore(placeholder, isAfter ? overCard.nextSibling : overCard);
+    }
+  }
+
+  function onUp() {
+    document.removeEventListener('pointermove', onMove);
+    document.removeEventListener('pointerup', onUp);
+    document.removeEventListener('pointercancel', onUp);
+
+    unlockScroll();
+    ghost.remove();
+    card.style.display = '';
+    placeholder.parentNode.replaceChild(card, placeholder);
+
+    // Sync the underlying task ledger order to match the new DOM order
+    const newOrderIds = Array.from(todoContainer.children)
+      .map(c => c.dataset && c.dataset.id)
+      .filter(Boolean);
+    if (newOrderIds.length === taskLedger.length) {
+      taskLedger.sort((a, b) => newOrderIds.indexOf(a.id) - newOrderIds.indexOf(b.id));
+    }
+    renderTaskLedger();
+  }
+
+  document.addEventListener('pointermove', onMove, { passive: false });
+  document.addEventListener('pointerup', onUp);
+  document.addEventListener('pointercancel', onUp);
 }
 
 // ── CONNECT EVENT INTERFACES ──────────────────────────────────────────
@@ -715,9 +943,6 @@ btnAddTask.addEventListener('click', () => {
   const allocation = parseInt(inputTaskHours.value) || 0;
   commitNewTask(name, allocation);
 });
-
-// Setup drag listeners to ensure elements register drops anywhere in the parent window container
-reservoirElement.addEventListener('dragover', (e) => e.preventDefault());
 
 // Initialize starting pool balance loop
 initializeHourReservoir(16);
