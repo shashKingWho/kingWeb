@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VR &amp; AR | shashKing</title>
+  <meta name="title" content="VR & AR | shashKing">
+  <meta name="description" content="Immersive VR and AR work by shashKing: room-scale VR adventures and mobile AR games.">
+  <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;700&display=swap');
+
+  :root {
+    --b1: #fe3424;
+    --b2: #fdbf36;
+    --b3: #1e69aa;
+    --b4: #0d0d0d;
+    --cream: #f5f0e8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .bh-page {
+    background: var(--cream);
+    font-family: 'Space Grotesk', sans-serif;
+    color: var(--b4);
+  }
+
+  /* ── NAV ── */
+  .bh-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 60px;
+    background: var(--b4);
+    border-bottom: 4px solid var(--b1);
+  }
+
+  .bh-nav .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.12em;
+    color: var(--cream);
+    text-decoration: none;
+  }
+
+  .bh-nav .logo span { color: var(--b2); }
+
+  .bh-nav ul { display: flex; gap: 2rem; list-style: none; }
+
+  .bh-nav a {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #aaa;
+    text-decoration: none;
+  }
+
+  .bh-nav a:hover { color: var(--b2); }
+  .bh-nav a.current { color: var(--b2); }
+
+  /* ── PAGE HERO ── */
+  .bh-page-hero {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding: 5rem 3rem;
+    border-bottom: 6px solid var(--b4);
+    background: var(--cream);
+  }
+
+  .hero-tile {
+    aspect-ratio: 1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow: hidden;
+    border: 4px solid var(--b4);
+    color: var(--b3);
+  }
+
+  .hero-tile span { display: grid; aspect-ratio: 1; }
+
+  .hero-tile span::before,
+  .hero-tile span::after {
+    content: '';
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  [data-digit="0"] span:nth-child(1) { border-radius: 100% 0 0 0; background: currentColor }
+  [data-digit="0"] span:nth-child(2) { background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%); border-radius: 0 100% 0 0 }
+  [data-digit="0"] span:nth-child(3) { background-image: repeating-linear-gradient(90deg, currentColor 0%, currentColor 50%, transparent 50%, transparent 100%); background-size: 15.42% 15.42% }
+  [data-digit="0"] span:nth-child(4) { background: var(--b2) }
+  [data-digit="0"] span:nth-child(5) { background: var(--b1); border-radius: 0 0 0 100% }
+  [data-digit="0"] span:nth-child(6) { background: var(--b3); border-radius: 0 0 100% 0 }
+
+  [data-digit="1"] span:nth-child(1) { border-radius: 100% 0 0 0; background: currentColor }
+  [data-digit="1"] span:nth-child(2) { background: var(--b1) }
+  [data-digit="1"] span:nth-child(4) { background: var(--b3) }
+  [data-digit="1"] span:nth-child(6) { background: var(--b2) }
+
+  [data-digit="2"] span:nth-child(1) { border-radius: 100% 0 0 0; background: var(--b1) }
+  [data-digit="2"] span:nth-child(2) { background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%); border-radius: 0 100% 0 0 }
+  [data-digit="2"] span:nth-child(4) { background: var(--b2); border-radius: 0 0 100% 0 }
+  [data-digit="2"] span:nth-child(5) { background: var(--b3) }
+  [data-digit="2"] span:nth-child(6) { background-image: repeating-linear-gradient(180deg, currentColor 0%, currentColor 50%, transparent 50%, transparent 100%); background-size: 15.42% 15.42% }
+
+  [data-digit="3"] span:nth-child(1) { border-radius: 100% 0 0 0; background: var(--b2) }
+  [data-digit="3"] span:nth-child(2) { background: currentColor; border-radius: 0 100% 0 0 }
+  [data-digit="3"] span:nth-child(4)::before { background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%); border-radius: 0 100% 0 0 }
+  [data-digit="3"] span:nth-child(4)::after { background: repeating-radial-gradient(circle at 0% 0%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%); border-radius: 0 0 100% 0 }
+  [data-digit="3"] span:nth-child(5) { background: var(--b3); border-radius: 0 0 0 100% }
+  [data-digit="3"] span:nth-child(6) { background: var(--b1); border-radius: 0 0 100% 0 }
+
+  [data-digit="4"] span:nth-child(1) { border-radius: 0 100% 0 0; background: var(--b2) }
+  [data-digit="4"] span:nth-child(2) { background-image: repeating-linear-gradient(90deg, currentColor 0%, currentColor 50%, transparent 50%, transparent 100%); background-size: 15.42% 15.42% }
+  [data-digit="4"] span:nth-child(3) { border-radius: 0 0 0 100%; background: currentColor }
+  [data-digit="4"] span:nth-child(4) { background: var(--b3) }
+  [data-digit="4"] span:nth-child(6) { background: var(--b1) }
+
+  [data-digit="5"] span:nth-child(1) { background: var(--b3) }
+  [data-digit="5"] span:nth-child(2) { border-radius: 0 0 100% 0; background: currentColor }
+  [data-digit="5"] span:nth-child(4) { background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%); border-radius: 0 100% 0 0 }
+  [data-digit="5"] span:nth-child(5) { border-radius: 0 0 0 100%; background: var(--b2) }
+  [data-digit="5"] span:nth-child(6) { border-radius: 0 0 100% 0; background: var(--b1) }
+
+  [data-digit="6"] span:nth-child(1) { border-radius: 100% 0 0 0; background: currentColor }
+  [data-digit="6"] span:nth-child(2) { border-radius: 0 100% 0 0; background: var(--b2) }
+  [data-digit="6"] span:nth-child(3) { background: var(--b3) }
+  [data-digit="6"] span:nth-child(4) { background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%); border-radius: 0 100% 0 0 }
+  [data-digit="6"] span:nth-child(5) { border-radius: 0 0 0 100%; background: var(--b2) }
+  [data-digit="6"] span:nth-child(6) { border-radius: 0 0 100% 0; background: var(--b1) }
+
+  [data-digit="7"] span:nth-child(1) { background: var(--b2) }
+  [data-digit="7"] span:nth-child(2) { border-radius: 0 100% 0 0; background: var(--b1) }
+  [data-digit="7"] span:nth-child(4) { background: var(--b3) }
+  [data-digit="7"] span:nth-child(6) { background: currentColor }
+
+  [data-digit="8"] span:nth-child(1) { border-radius: 100% 0 0 0; background: var(--b2) }
+  [data-digit="8"] span:nth-child(2) { border-radius: 0 100% 0 0; background: var(--b3) }
+  [data-digit="8"] span:nth-child(3)::before { border-radius: 100% 0 0 0; background: var(--b3) }
+  [data-digit="8"] span:nth-child(3)::after { background: repeating-radial-gradient(circle at 100% 0%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%); border-radius: 0 0 0 100% }
+  [data-digit="8"] span:nth-child(4)::before { border-radius: 0 0 100% 0; background: var(--b2) }
+  [data-digit="8"] span:nth-child(4)::after { background: repeating-radial-gradient(circle at 0% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%); border-radius: 0 100% 0 0 }
+  [data-digit="8"] span:nth-child(5) { background: var(--b1); border-radius: 0 0 0 100% }
+  [data-digit="8"] span:nth-child(6) { background: currentColor; border-radius: 0 0 100% 0 }
+
+  [data-digit="9"] span:nth-child(1) { background: repeating-radial-gradient(circle at 100% 100%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%); border-radius: 100% 0 0 0 }
+  [data-digit="9"] span:nth-child(2) { background: var(--b2); border-radius: 0 100% 0 0 }
+  [data-digit="9"] span:nth-child(3) { background: var(--b1); border-radius: 0 0 0 100% }
+  [data-digit="9"] span:nth-child(4) { background: repeating-radial-gradient(circle at 0% 0%, currentColor, currentColor 5.42%, transparent 5.42%, transparent 10.85%) }
+  [data-digit="9"] span:nth-child(5) { background: var(--b3); border-radius: 0 0 0 100% }
+  [data-digit="9"] span:nth-child(6) { background: currentColor; border-radius: 0 0 100% 0 }
+
+  @media (max-width: 800px) {
+    .bh-page-hero { grid-template-columns: 1fr; }
+    .hero-tile { max-width: 240px; margin: 0 auto; }
+  }
+
+  .bh-page-hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 9vw, 110px);
+    line-height: 0.95;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+  }
+
+  .bh-page-hero h1 em { font-style: normal; color: var(--b1); }
+
+  .bh-page-hero p {
+    font-size: 15px;
+    line-height: 1.7;
+    max-width: 560px;
+    color: #444;
+    border-left: 4px solid var(--b3);
+    padding-left: 1rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--b3);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .back-link:hover { text-decoration: underline; }
+
+  /* ── SECTIONS ── */
+  .bh-section { padding: 4rem 3rem; border-top: 6px solid var(--b4); }
+
+  .bh-section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .bh-section-head h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    letter-spacing: 0.08em;
+    color: var(--b4);
+  }
+
+  .bh-section-head .tag {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--b1);
+    padding: 4px 10px;
+  }
+
+  .bh-section-head.ar .tag { background: var(--b3); }
+
+  .bh-section-head .rule {
+    flex: 1;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, var(--b4) 0, var(--b4) 10px, transparent 10px, transparent 18px);
+  }
+
+  /* ── PROJECT GRID (shared with homepage) ── */
+  .bh-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 4px solid var(--b4);
+  }
+
+  .proj-card {
+    padding: 2rem 1.75rem;
+    border-right: 4px solid var(--b4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .proj-card:last-child { border-right: none; }
+
+  .proj-card::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+  }
+
+  #vr .proj-card:nth-child(1)::before { background: var(--b1); }
+  #vr .proj-card:nth-child(2)::before { background: var(--b2); }
+  #ar .proj-card:nth-child(1)::before { background: var(--b3); }
+  #ar .proj-card:nth-child(2)::before { background: var(--b1); }
+
+  .proj-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+
+  .proj-card p {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 1rem;
+  }
+
+  .proj-card a {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--b3);
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .proj-card a:hover { text-decoration: underline; }
+
+  .status-pill {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+    border: 1px solid #ccc;
+    padding: 3px 10px;
+  }
+
+  @media (max-width: 800px) {
+    .bh-projects-grid { grid-template-columns: 1fr; }
+    .proj-card { border-right: none; border-bottom: 4px solid var(--b4); }
+    .proj-card:last-child { border-bottom: none; }
+  }
+
+  /* ── XR FEATURE CARD ── */
+  .xr-feature-card {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    border: 4px solid var(--b4);
+  }
+
+  .xr-feature-media { border-right: 4px solid var(--b4); overflow: hidden; }
+  .xr-feature-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .xr-feature-body { padding: 2rem 2.25rem; }
+
+  .xr-feature-body h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    margin: 0.6rem 0 0.9rem;
+  }
+
+  .xr-feature-body p {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: #444;
+    margin-bottom: 1.1rem;
+    max-width: 640px;
+  }
+
+  .xr-quote {
+    border-left: 4px solid var(--b2);
+    padding: 0.5rem 0 0.5rem 1rem;
+    margin-bottom: 1.1rem;
+    font-style: italic;
+    font-size: 13px;
+    color: #333;
+    max-width: 640px;
+  }
+
+  .xr-quote cite {
+    display: block;
+    margin-top: 0.4rem;
+    font-style: normal;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #888;
+  }
+
+  .xr-tags {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: #999;
+    margin-bottom: 1.1rem;
+  }
+
+  @media (max-width: 700px) {
+    .xr-feature-card { grid-template-columns: 1fr; }
+    .xr-feature-media { border-right: none; border-bottom: 4px solid var(--b4); aspect-ratio: 16/9; }
+  }
+
+  /* ── FOOTER ── */
+  .bh-footer {
+    background: var(--b4);
+    color: #555;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 1rem;
+    border-top: 2px solid #222;
+  }
+
+  .bh-footer a { color: #888; text-decoration: none; }
+  .bh-footer a:hover { color: var(--b2); }
+  .bh-footer span { color: var(--b1); }
+</style>
+</head>
+<body>
+
+<div class="bh-page">
+
+  <nav class="bh-nav">
+    <a class="logo" href="index.html">shash<span>King</span></a>
+    <ul>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="games.html">Games</a></li>
+      <li><a href="vr-ar.html" class="current">VR &amp; AR</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="bh-page-hero">
+    <div>
+      <h1>VR <em>&amp;</em><br>AR</h1>
+      <p>Immersive work built under the shashKing label: room-scale VR adventures and mobile AR games that bring the game world into yours.</p>
+      <a class="back-link" href="index.html">← Back to Home</a>
+    </div>
+    <div class="hero-tile" id="vr-ar-hero-tile">
+      <span></span><span></span><span></span>
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="bh-section" id="vr">
+    <div class="bh-section-head">
+      <h2>Virtual Reality</h2>
+      <span class="tag">VR</span>
+      <div class="rule"></div>
+    </div>
+
+    <div class="bh-projects-grid">
+      <article class="proj-card">
+        <h3>COPPS DONUT KNOW</h3>
+        <p>A VR experience built under the shashKing label.</p>
+        <span class="status-pill">In Development</span><br><br>
+        <a href="https://shashking.itch.io/" target="_blank" rel="noopener noreferrer">Follow progress on Itch.io →</a>
+      </article>
+
+      <article class="proj-card">
+        <h3>ADVENTURE OF CIHLO</h3>
+        <p>A VR experience built under the shashKing label.</p>
+        <span class="status-pill">In Development</span><br><br>
+        <a href="https://shashking.itch.io/" target="_blank" rel="noopener noreferrer">Follow progress on Itch.io →</a>
+      </article>
+    </div>
+  </div>
+
+  <div class="bh-section" id="ar">
+    <div class="bh-section-head ar">
+      <h2>Augmented Reality</h2>
+      <span class="tag">AR</span>
+      <div class="rule"></div>
+    </div>
+
+    <div class="bh-projects-grid">
+      <article class="proj-card">
+        <h3>BATS AND WOLVES</h3>
+        <p>A mobile AR game built under the shashKing label, released on Google Play.</p>
+        <a href="https://play.google.com/store/apps/details?id=com.shashking.batsandwolves" target="_blank" rel="noopener noreferrer">
+          Play on Google Play →
+        </a>
+      </article>
+
+      <article class="proj-card">
+        <h3>DINOSAUR DAY AR</h3>
+        <p>The AR companion to Dinosaur Day, released on Google Play.</p>
+        <a href="https://play.google.com/store/apps/details?id=com.shashking.dinosaurdayar" target="_blank" rel="noopener noreferrer">
+          Play on Google Play →
+        </a>
+      </article>
+    </div>
+  </div>
+
+  <div class="bh-section" id="xr-research">
+    <div class="bh-section-head">
+      <h2>XR Research</h2>
+      <span class="tag" style="background:var(--b2); color:var(--b4);">XR</span>
+      <div class="rule"></div>
+    </div>
+
+    <article class="xr-feature-card">
+      <div class="xr-feature-media">
+        <img src="public/vr-ar/xr-fundamentals.png" alt="XR Fundamentals Challenge cover art" loading="lazy">
+      </div>
+      <div class="xr-feature-body">
+        <span class="status-pill">Released · Games for Change · Flexible Jam 2025</span>
+        <h3>XR FUNDAMENTALS CHALLENGE</h3>
+        <p>Built by shashKing for the Games for Change initiative, XR Fundamentals treats immersive education as an interactive challenge. As spatial computing rapidly evolves, understanding how we interact with digital space (beyond flat 2D screens) is critical for designers, developers, and digital citizens alike. Answer a curated, randomized series of questions on spatial understanding, XR-assisted maintenance, and on-body interaction design: score 70% or higher to pass and unlock your spatial literacy breakdown.</p>
+        <blockquote class="xr-quote">
+          "Without physical resistance, mid-air interactions feel floaty and imprecise... By utilizing tactile feedback directly on the skin via headset hand tracking, we can bring true immersion back to spatial computing."
+          <cite>— shashKing, on the Invisible Button Study</cite>
+        </blockquote>
+        <div class="xr-tags">accessibility · ar · browser · html5 · science · spatial-computing · virtual reality · xr</div>
+        <a href="https://shashking.itch.io/xr-fundamentals-challenge" target="_blank" rel="noopener noreferrer">Play XR Fundamentals Challenge →</a>
+      </div>
+    </article>
+  </div>
+
+  <div class="bh-footer">
+    <a href="games.html">Games</a> ·
+    <a href="vr-ar.html">VR &amp; AR</a> ·
+    <a href="privacy-policy.html">Privacy Policy</a> ·
+    <a href="index.html">Home</a>
+    &nbsp;— © 2025 <span>shashKing</span>: All Rights Reserved
+  </div>
+</div>
+
+<script>
+  const heroTile = document.getElementById('vr-ar-hero-tile');
+  let tileDigit = 9;
+  setInterval(() => {
+    tileDigit = tileDigit < 0 ? 9 : tileDigit;
+    if (heroTile) heroTile.dataset.digit = tileDigit;
+    tileDigit--;
+  }, 1000);
+</script>
+
+</body>
+</html>

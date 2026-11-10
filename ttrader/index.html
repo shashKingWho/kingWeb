@@ -4,10 +4,53 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Time Trader Matrix</title>
+<link rel="icon" type="image/x-icon" href="../public/favicon.ico">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;700&display=swap');
+
+:root {
+  --b1: #fe3424;
+  --b2: #fdbf36;
+  --b3: #1e69aa;
+  --b4: #0d0d0d;
+  --cream: #f5f0e8;
+}
+
+/* ── BAUHAUS SITE NAV / FOOTER ──────────────────────────────────────── */
+.bh-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 60px;
+  background: var(--b4);
+  border-bottom: 4px solid var(--b1);
+  position: relative;
+  z-index: 20;
+}
+.bh-nav .logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.12em; color: var(--cream); text-decoration: none; }
+.bh-nav .logo span { color: var(--b2); }
+.bh-nav ul { display: flex; gap: 2rem; list-style: none; }
+.bh-nav a { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: #aaa; text-decoration: none; }
+.bh-nav a:hover { color: var(--b2); }
+.bh-footer {
+  background: var(--b4);
+  color: #555;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 1rem;
+  border-top: 2px solid #222;
+  margin-top: 24px;
+}
+.bh-footer a { color: #888; text-decoration: none; }
+.bh-footer a:hover { color: var(--b2); }
+.bh-footer span { color: var(--b1); }
+
 /* ── CRITICAL STRUCTURE & FILE VIBE REPLICAS ──────────────────────────── */
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:#030b16;font-family:'Courier New',monospace;color:#fff;overflow:hidden}
+html,body{width:100%;height:100%;background:var(--cream);font-family:'Space Grotesk',sans-serif;color:var(--b4);overflow:hidden}
 
 /* Background canvas pinned under UI */
 #cv {
@@ -24,10 +67,10 @@ html,body{width:100%;height:100%;background:#030b16;font-family:'Courier New',mo
   position:relative;
   z-index:10;
   width:100%;
-  height:100%;
+  height:calc(100% - 60px);
   overflow-y:auto;
   padding:30px 15px;
-  background:rgba(3, 11, 22, 0.2); /* Transparent to show the wall animation */
+  background:rgba(245, 240, 232, 0.55); /* Translucent cream to show the wall animation */
 }
 
 .app-container {
@@ -43,28 +86,29 @@ header {
   text-align:center;
   margin-bottom:10px;
 }
-.eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:rgba(0,210,235,.55);margin-bottom:10px}
-.title{font-family:Impact,'Arial Narrow',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:900;color:#fff;letter-spacing:.04em;text-shadow:0 0 60px rgba(0,180,230,.35),0 0 120px rgba(0,120,200,.2)}
-.title span{color:#00d8f0}
+.eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--b3);margin-bottom:10px}
+.title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:400;color:var(--b4);letter-spacing:.06em;text-shadow:none}
+.title span{color:var(--b1)}
 
-/* ── NEON GLASS GLOW PANELS ──────────────────────────────────────────── */
+/* ── BAUHAUS FLAT PANELS ──────────────────────────────────────────── */
 .neon-panel {
-  background:rgba(5,20,38,0.75);
-  border:1px solid rgba(0,218,240,0.25);
-  box-shadow:0 0 30px rgba(0,180,230,0.15), inset 0 0 15px rgba(0,218,240,0.05);
-  border-radius:6px;
+  background:var(--cream);
+  border:4px solid var(--b4);
+  box-shadow:none;
+  border-radius:0;
   padding:20px;
 }
 
 .panel-title {
-  font-size:12px;
-  letter-spacing:0.18em;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:14px;
+  letter-spacing:0.12em;
   text-transform:uppercase;
-  color:#00d8f0;
+  color:var(--b3);
   margin-bottom:16px;
-  border-bottom:1px solid rgba(0,218,240,0.2);
+  border-bottom:3px solid var(--b4);
   padding-bottom:6px;
-  font-weight: bold;
+  font-weight: 400;
 }
 
 /* ── INPUTS & TECH BUTTONS ───────────────────────────────────────────── */
@@ -76,38 +120,39 @@ header {
   justify-content:space-between;
 }
 .input-group { display:flex; align-items:center; gap:10px; }
-label { font-size:11px; text-transform:uppercase; color:rgba(100,180,210,0.7); letter-spacing:0.12em; }
+label { font-size:11px; text-transform:uppercase; color:var(--b4); opacity:0.65; letter-spacing:0.12em; }
 
 input[type="number"], input[type="text"] {
-  background:rgba(3,11,22,0.85);
-  border:1px solid rgba(0,218,240,0.35);
-  color:#fff;
+  background:#fff;
+  border:2px solid var(--b4);
+  color:var(--b4);
   padding:8px 12px;
-  border-radius:4px;
+  border-radius:0;
   font-family:inherit;
   outline:none;
 }
 input[type="number"]:focus, input[type="text"]:focus {
-  border-color:#00d8f0;
-  box-shadow:0 0 12px rgba(0,218,240,0.4);
+  border-color:var(--b3);
+  box-shadow:none;
 }
 
 .btn {
-  background:linear-gradient(90deg, #005c8a, #0099be);
-  color:#fff;
+  background:var(--b4);
+  color:var(--cream);
   border:none;
   padding:9px 18px;
-  font-family:inherit;
-  font-weight:bold;
+  font-family:'Bebas Neue',sans-serif;
+  font-weight:400;
   text-transform:uppercase;
   letter-spacing:0.1em;
-  border-radius:4px;
+  border-radius:0;
   cursor:pointer;
-  transition:all 0.2s ease;
+  transition:background 0.15s ease;
 }
 .btn:hover {
-  box-shadow:0 0 15px #00d8f0;
-  transform:translateY(-1px);
+  background:var(--b3);
+  box-shadow:none;
+  transform:none;
 }
 
 /* ── TRACKING HOURLY BLOCKS ──────────────────────────────────────────── */
@@ -122,17 +167,17 @@ input[type="number"]:focus, input[type="text"]:focus {
   font-size:11px;
   text-transform:uppercase;
   letter-spacing:0.1em;
-  color:rgba(0,210,235,0.7);
+  color:var(--b3);
 }
 .hour-matrix-container {
   display:flex;
   flex-wrap:wrap;
   gap:8px;
   min-height:56px;
-  background:rgba(3,11,22,0.6);
-  border:1px dashed rgba(0,218,240,0.25);
+  background:#fff;
+  border:2px dashed var(--b4);
   padding:10px;
-  border-radius:4px;
+  border-radius:0;
   align-items: center;
 }
 
@@ -143,13 +188,13 @@ input[type="number"]:focus, input[type="text"]:focus {
   display:flex;
   align-items:center;
   justify-content:center;
-  background:linear-gradient(135deg, rgba(120,230,255,0.25), rgba(0,92,138,0.5));
-  border:1px solid rgba(0,218,240,0.7);
-  box-shadow:inset 0 1px 4px rgba(255,255,255,0.15), 0 0 8px rgba(0,218,240,0.2);
-  border-radius:4px;
+  background:var(--b2);
+  border:2px solid var(--b4);
+  box-shadow:none;
+  border-radius:0;
   font-weight:bold;
   font-size:11px;
-  color:#fff;
+  color:var(--b4);
   cursor:grab;
   user-select:none;
   touch-action:none;
@@ -171,9 +216,9 @@ input[type="number"]:focus, input[type="text"]:focus {
 
 /* Placeholder shown in the task list while a card is being reordered */
 .task-card-placeholder {
-  border:1px dashed rgba(0,218,240,0.5);
-  border-radius:4px;
-  background:rgba(0,218,240,0.06);
+  border:2px dashed var(--b3);
+  border-radius:0;
+  background:rgba(30,105,170,0.08);
 }
 
 /* Grip handle hint on task cards */
@@ -184,7 +229,7 @@ input[type="number"]:focus, input[type="text"]:focus {
   align-items:center;
   gap:3px;
   padding:0 4px;
-  color:rgba(0,218,240,0.45);
+  color:rgba(13,13,13,0.4);
   font-size:14px;
   letter-spacing:2px;
   line-height:0.6;
@@ -208,37 +253,37 @@ input[type="number"]:focus, input[type="text"]:focus {
 .todo-list-container { display:flex; flex-direction:column; gap:12px; }
 
 .task-card {
-  background:rgba(3,16,33,0.85);
-  border-left:4px solid #00d8f0;
-  border-top:1px solid rgba(0,218,240,0.15);
-  border-right:1px solid rgba(0,218,240,0.15);
-  border-bottom:1px solid rgba(0,218,240,0.15);
-  border-radius:0 4px 4px 0;
+  background:#fff;
+  border-left:6px solid var(--b3);
+  border-top:2px solid var(--b4);
+  border-right:2px solid var(--b4);
+  border-bottom:2px solid var(--b4);
+  border-radius:0;
   padding:14px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:16px;
-  transition:all 0.2s ease;
+  transition:background 0.2s ease;
 }
 .task-card.drag-over {
-  border-color:#fff;
-  background:rgba(0,218,240,0.15);
-  box-shadow:0 0 20px rgba(0,218,240,0.35);
+  border-color:var(--b4);
+  background:rgba(253,191,54,0.25);
+  box-shadow:none;
 }
 
 /* Expired session tint — only ever applied to incomplete tasks */
 .task-card.session-expired {
-  border-left-color:#ff3b3b;
-  border-color:rgba(255,60,60,0.5);
-  background:rgba(90,10,10,0.55);
-  box-shadow:0 0 22px rgba(255,50,50,0.3), inset 0 0 15px rgba(255,50,50,0.08);
+  border-left-color:var(--b1);
+  border-color:var(--b1);
+  background:rgba(254,52,36,0.12);
+  box-shadow:none;
   animation: expired-pulse 1.6s ease-in-out infinite;
 }
-.task-card.session-expired .task-title { color:#ffb3b3; }
+.task-card.session-expired .task-title { color:var(--b1); }
 @keyframes expired-pulse {
-  0%, 100% { box-shadow:0 0 22px rgba(255,50,50,0.3), inset 0 0 15px rgba(255,50,50,0.08); }
-  50% { box-shadow:0 0 34px rgba(255,50,50,0.55), inset 0 0 20px rgba(255,50,50,0.16); }
+  0%, 100% { background:rgba(254,52,36,0.12); }
+  50% { background:rgba(254,52,36,0.28); }
 }
 
 /* Inset session countdown bar */
@@ -251,28 +296,28 @@ input[type="number"]:focus, input[type="text"]:focus {
 .session-bar-track {
   flex-grow:1;
   height:6px;
-  border-radius:3px;
-  background:rgba(0,0,0,0.4);
-  border:1px solid rgba(0,218,240,0.25);
+  border-radius:0;
+  background:#eee;
+  border:1px solid var(--b4);
   overflow:hidden;
 }
 .session-bar-fill {
   height:100%;
-  background:linear-gradient(90deg, #00d8f0, #0099be);
-  border-radius:3px;
+  background:var(--b3);
+  border-radius:0;
   transition:width 1s linear, background 0.3s ease;
 }
 .session-expired .session-bar-fill {
-  background:linear-gradient(90deg, #ff3b3b, #b30000);
+  background:var(--b1);
 }
 .session-bar-label {
   font-size:10px;
   letter-spacing:0.08em;
-  color:rgba(0,218,240,0.8);
+  color:var(--b3);
   min-width:44px;
   text-align:right;
 }
-.session-expired .session-bar-label { color:#ff8888; }
+.session-expired .session-bar-label { color:var(--b1); }
 
 .session-toggle-btn {
   white-space:nowrap;
@@ -287,14 +332,14 @@ input[type="number"]:focus, input[type="text"]:focus {
   gap:4px;
   min-height:26px;
   padding:4px;
-  background:rgba(0,0,0,0.25);
-  border-radius:4px;
+  background:rgba(13,13,13,0.06);
+  border-radius:0;
   align-items:center;
 }
 /* Shrunk version inside cards */
 .task-allocated-blocks .hour-block {
   width:24px; height:24px; font-size:9px;
-  background:linear-gradient(135deg, rgba(0,218,240,0.4), rgba(0,55,110,0.6));
+  background:var(--b2);
   cursor: default;
 }
 
@@ -303,38 +348,38 @@ input[type="number"]:focus, input[type="text"]:focus {
 /* Tech Switch Custom Controls */
 .checkbox-container {
   display:inline-flex; align-items:center; cursor:pointer; font-size:11px;
-  text-transform:uppercase; color:rgba(0,218,240,0.7); gap:6px;
+  text-transform:uppercase; color:var(--b3); gap:6px;
   user-select: none;
 }
 .checkbox-container input { display:none; }
 .custom-checkmark {
-  width:16px; height:16px; border:1px solid #00d8f0; border-radius:3px;
-  display:inline-block; position:relative; background: rgba(0,0,0,0.3);
+  width:16px; height:16px; border:2px solid var(--b4); border-radius:0;
+  display:inline-block; position:relative; background: #fff;
 }
-.checkbox-container input:checked + .custom-checkmark { background:#00d8f0; }
+.checkbox-container input:checked + .custom-checkmark { background:var(--b2); }
 .checkbox-container input:checked + .custom-checkmark::after {
   content:''; position:absolute; left:4px; top:1px; width:4px; height:8px;
-  border:solid #030b16; border-width:0 2px 2px 0; transform:rotate(45deg);
+  border:solid var(--b4); border-width:0 2px 2px 0; transform:rotate(45deg);
 }
 
 /* Completed Modifiers */
 .task-card.completed {
-  border-left-color:rgba(100,180,210,0.3);
+  border-left-color:var(--b4);
   opacity:0.45;
 }
-.task-card.completed .task-title { text-decoration:line-through; color:rgba(255,255,255,0.4); }
+.task-card.completed .task-title { text-decoration:line-through; color:rgba(13,13,13,0.4); }
 
 .delete-x-btn {
-  padding:4px 8px; font-size:11px; background:rgba(235,60,60,0.15); border:1px solid rgba(235,60,60,0.4);
-  color:#ff8888; border-radius:3px; cursor:pointer; font-family: inherit;
+  padding:4px 8px; font-size:11px; background:#fff; border:2px solid var(--b1);
+  color:var(--b1); border-radius:0; cursor:pointer; font-family: inherit;
 }
-.delete-x-btn:hover { background:rgba(235,60,60,0.4); color:#fff; }
+.delete-x-btn:hover { background:var(--b1); color:var(--cream); }
 
 /* ── PRODUCTIVITY BANNER SLIDER ──────────────────────────────────────── */
 .productivity-banner {
   position:relative;
   overflow:hidden;
-  border-radius:6px;
+  border-radius:0;
   min-height:118px;
 }
 .banner-track {
@@ -354,41 +399,41 @@ input[type="number"]:focus, input[type="text"]:focus {
   font-size:11px;
   letter-spacing:0.18em;
   text-transform:uppercase;
-  color:rgba(0,218,240,0.65);
+  color:var(--b3);
   margin-bottom:6px;
 }
 .banner-slide-pct {
-  font-family:Impact,'Arial Narrow',sans-serif;
+  font-family:'Bebas Neue',sans-serif;
   font-size:clamp(2rem,4.5vw,2.8rem);
-  font-weight:900;
-  color:#fff;
-  text-shadow:0 0 30px rgba(0,180,230,0.5);
+  font-weight:400;
+  color:var(--b4);
+  text-shadow:none;
   line-height:1;
 }
-.banner-slide-pct.over-target { color:#7bffb0; text-shadow:0 0 30px rgba(80,255,150,0.5); }
-.banner-slide-pct.under-target { color:#ffe27b; text-shadow:0 0 30px rgba(255,220,120,0.4); }
+.banner-slide-pct.over-target { color:var(--b3); text-shadow:none; }
+.banner-slide-pct.under-target { color:var(--b1); text-shadow:none; }
 .banner-slide-sub {
   font-size:11px;
-  color:rgba(200,235,245,0.65);
+  color:rgba(13,13,13,0.65);
   letter-spacing:0.05em;
   margin-top:6px;
 }
 .banner-bar-track {
   flex-grow:1;
   height:10px;
-  border-radius:5px;
-  background:rgba(0,0,0,0.4);
-  border:1px solid rgba(0,218,240,0.25);
+  border-radius:0;
+  background:#eee;
+  border:1px solid var(--b4);
   overflow:hidden;
   max-width:220px;
 }
 .banner-bar-fill {
   height:100%;
-  background:linear-gradient(90deg, #00d8f0, #0099be);
-  border-radius:5px;
+  background:var(--b4);
+  border-radius:0;
   transition:width 0.6s ease;
 }
-.banner-bar-fill.over-target { background:linear-gradient(90deg, #2fe08a, #0aa85c); }
+.banner-bar-fill.over-target { background:var(--b3); }
 .banner-slide-right { display:flex; flex-direction:column; align-items:flex-end; gap:8px; min-width:120px; }
 .banner-dots {
   display:flex;
@@ -399,19 +444,30 @@ input[type="number"]:focus, input[type="text"]:focus {
 .banner-dot {
   width:8px; height:8px;
   border-radius:50%;
-  background:rgba(0,218,240,0.25);
-  border:1px solid rgba(0,218,240,0.4);
+  background:rgba(13,13,13,0.15);
+  border:1px solid var(--b4);
   cursor:pointer;
   transition:all 0.2s ease;
   padding:0;
 }
 .banner-dot.active {
-  background:#00d8f0;
-  box-shadow:0 0 8px rgba(0,218,240,0.8);
+  background:var(--b3);
+  box-shadow:none;
 }
 </style>
 </head>
 <body>
+
+<nav class="bh-nav">
+  <a class="logo" href="../index.html">shash<span>King</span></a>
+  <ul>
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="../games.html">Games</a></li>
+    <li><a href="../vr-ar.html">VR &amp; AR</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+</nav>
 
 <canvas id="cv"></canvas>
 
@@ -434,7 +490,7 @@ input[type="number"]:focus, input[type="text"]:focus {
       <div class="input-group">
         <label for="hours-to-mint">Awake Cycle Capacity</label>
         <input type="number" id="hours-to-mint" value="5" min="1" max="24" style="width:70px;">
-        <span style="font-size:11px; color:#00d8f0">HRS</span>
+        <span style="font-size:11px; color:var(--b3)">HRS</span>
       </div>
       <button class="btn" id="generate-pool-btn">Initialize Hour Banks</button>
     </div>
@@ -442,7 +498,7 @@ input[type="number"]:focus, input[type="text"]:focus {
     <div class="neon-panel hour-pool-wrapper">
       <div class="pool-metrics">
         <span>Liquid Time Reserves (Drag Blocks Below)</span>
-        <div>Available Pool: <span id="pool-counter" style="color:#00d8f0; font-weight:bold;">0</span> Hours</div>
+        <div>Available Pool: <span id="pool-counter" style="color:var(--b3); font-weight:bold;">0</span> Hours</div>
       </div>
       <div class="hour-matrix-container" id="global-hour-reservoir">
         </div>
@@ -478,6 +534,14 @@ input[type="number"]:focus, input[type="text"]:focus {
           
       </span>
       <span>❤️ from Bhiya</span>
+  </div>
+
+  <div class="bh-footer">
+    <a href="../games.html">Games</a> ·
+    <a href="../vr-ar.html">VR &amp; AR</a> ·
+    <a href="../privacy-policy.html">Privacy Policy</a> ·
+    <a href="../index.html">Home</a>
+    &nbsp;— © 2025 <span>shashKing</span> — All Rights Reserved
   </div>
 
   </div>
@@ -560,8 +624,8 @@ function drawLayer(scrollX, cellW, cellH, gap, alpha, glowScale) {
     const bx = x + cellW / 2;
     const by = bottomY - stackH * 0.5;
     const bloom = ctx.createRadialGradient(bx, bottomY, 0, bx, by, bloomR);
-    bloom.addColorStop(0, `rgba(0,190,230,${(alpha * 0.12 * glowScale).toFixed(3)})`);
-    bloom.addColorStop(0.5, `rgba(0,140,200,${(alpha * 0.05 * glowScale).toFixed(3)})`);
+    bloom.addColorStop(0, `rgba(30,105,170,${(alpha * 0.12 * glowScale).toFixed(3)})`);
+    bloom.addColorStop(0.5, `rgba(30,105,170,${(alpha * 0.05 * glowScale).toFixed(3)})`);
     bloom.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = bloom;
     ctx.fillRect(x - bloomR * 0.5, bottomY - bloomR * 1.2, cellW + bloomR, bloomR * 1.2);
@@ -572,23 +636,23 @@ function drawLayer(scrollX, cellW, cellH, gap, alpha, glowScale) {
       const vAlpha = alpha * (0.15 + 0.85 * (1 - row / h));
 
       const g = ctx.createLinearGradient(x, cy, x + cellW, cy);
-      g.addColorStop(0,    `rgba(120,230,255,${(vAlpha * 0.55).toFixed(3)})`);
-      g.addColorStop(0.15, `rgba(0,200,240,${(vAlpha * 0.95).toFixed(3)})`);
-      g.addColorStop(0.45, `rgba(0,160,215,${(vAlpha * 0.75).toFixed(3)})`);
-      g.addColorStop(0.75, `rgba(0,100,170,${(vAlpha * 0.45).toFixed(3)})`);
-      g.addColorStop(1,    `rgba(0,55,110,${(vAlpha * 0.18).toFixed(3)})`);
+      g.addColorStop(0,    `rgba(253,222,140,${(vAlpha * 0.55).toFixed(3)})`);
+      g.addColorStop(0.15, `rgba(254,52,36,${(vAlpha * 0.95).toFixed(3)})`);
+      g.addColorStop(0.45, `rgba(30,105,170,${(vAlpha * 0.75).toFixed(3)})`);
+      g.addColorStop(0.75, `rgba(20,70,110,${(vAlpha * 0.45).toFixed(3)})`);
+      g.addColorStop(1,    `rgba(13,13,13,${(vAlpha * 0.18).toFixed(3)})`);
 
       ctx.beginPath();
-      ctx.roundRect(x, cy, cellW, cellH, 2);
+      ctx.rect(x, cy, cellW, cellH);
       ctx.fillStyle = g;
       ctx.fill();
 
-      // Mirror glass sheen effect
+      // Flat highlight edge
       const shine = ctx.createLinearGradient(x, cy, x + cellW, cy);
-      shine.addColorStop(0,   `rgba(180,245,255,${(vAlpha * 0.85).toFixed(3)})`);
+      shine.addColorStop(0,   `rgba(245,240,232,${(vAlpha * 0.85).toFixed(3)})`);
       shine.addColorStop(0.25,`rgba(255,255,255,${(vAlpha * 0.9).toFixed(3)})`);
-      shine.addColorStop(0.6, `rgba(100,220,245,${(vAlpha * 0.55).toFixed(3)})`);
-      shine.addColorStop(1,   `rgba(0,140,190,${(vAlpha * 0.1).toFixed(3)})`);
+      shine.addColorStop(0.6, `rgba(253,191,54,${(vAlpha * 0.55).toFixed(3)})`);
+      shine.addColorStop(1,   `rgba(30,105,170,${(vAlpha * 0.1).toFixed(3)})`);
       ctx.fillStyle = shine;
       ctx.fillRect(x, cy, cellW, 2);
     }
@@ -604,10 +668,10 @@ function drawScanlines() {
     const startX = (elapsed * (8 + i * 3) * 0.001) % (W + w * 2) - w;
     const a = 0.018 + 0.01 * Math.sin(elapsed * 0.003 + i);
     const g = ctx.createLinearGradient(startX, 0, startX + w, 0);
-    g.addColorStop(0,   'rgba(0,200,235,0)');
-    g.addColorStop(0.4, `rgba(0,200,235,${a.toFixed(3)})`);
-    g.addColorStop(0.6, `rgba(200,240,255,${(a*1.5).toFixed(3)})`);
-    g.addColorStop(1,   'rgba(0,200,235,0)');
+    g.addColorStop(0,   'rgba(253,191,54,0)');
+    g.addColorStop(0.4, `rgba(253,191,54,${a.toFixed(3)})`);
+    g.addColorStop(0.6, `rgba(255,255,255,${(a*1.5).toFixed(3)})`);
+    g.addColorStop(1,   'rgba(253,191,54,0)');
     ctx.fillStyle = g;
     ctx.fillRect(startX, y, w, 1);
   }
@@ -622,17 +686,17 @@ function animate(ts) {
 
   // Background deep space gradient
   const sky = ctx.createLinearGradient(0, 0, 0, H);
-  sky.addColorStop(0,   '#030c18');
-  sky.addColorStop(0.5, '#050f20');
-  sky.addColorStop(1,   '#06131f');
+  sky.addColorStop(0,   '#0d0d0d');
+  sky.addColorStop(0.5, '#161616');
+  sky.addColorStop(1,   '#0d0d0d');
   ctx.fillStyle = sky;
   ctx.fillRect(0, 0, W, H);
 
   // Atmospheric floor haze
   const haze = ctx.createLinearGradient(0, H - lowerH * 1.8, 0, H);
-  haze.addColorStop(0, 'rgba(0,20,50,0)');
-  haze.addColorStop(0.35, 'rgba(0,18,45,0.5)');
-  haze.addColorStop(1, 'rgba(0,8,20,0.88)');
+  haze.addColorStop(0, 'rgba(13,13,13,0)');
+  haze.addColorStop(0.35, 'rgba(13,13,13,0.5)');
+  haze.addColorStop(1, 'rgba(13,13,13,0.88)');
   ctx.fillStyle = haze;
   ctx.fillRect(0, H - lowerH * 1.8, W, lowerH * 1.8);
 
@@ -662,7 +726,7 @@ function animate(ts) {
     const ba = 0.08 + 0.42 * (0.5 + 0.5 * Math.sin(p.phase));
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(80,215,245,${ba.toFixed(3)})`;
+    ctx.fillStyle = `rgba(253,191,54,${ba.toFixed(3)})`;
     ctx.fill();
   }
   ctx.restore();
@@ -670,7 +734,7 @@ function animate(ts) {
   // Vignette
   const vig = ctx.createRadialGradient(W/2, H/2, W*0.15, W/2, H/2, W*0.75);
   vig.addColorStop(0, 'rgba(0,0,0,0)');
-  vig.addColorStop(1, 'rgba(0,3,12,0.62)');
+  vig.addColorStop(1, 'rgba(13,13,13,0.62)');
   ctx.fillStyle = vig;
   ctx.fillRect(0, 0, W, H);
 
@@ -1050,7 +1114,7 @@ function attachBlockPointerDrag(block, id) {
           ghost.style.zIndex = '9999';
           ghost.style.opacity = '0.9';
           ghost.style.transform = 'scale(1.1)';
-          ghost.style.boxShadow = '0 8px 30px rgba(0,218,240,0.6)';
+          ghost.style.boxShadow = '0 4px 0 rgba(13,13,13,0.5)';
           document.body.appendChild(ghost);
           block.classList.add('is-dragging-source');
         } else {
@@ -1148,7 +1212,7 @@ function renderTaskLedger() {
   todoContainer.innerHTML = '';
 
   if (taskLedger.length === 0) {
-    todoContainer.innerHTML = `<div style="text-align:center; color:rgba(100,180,210,0.3); padding:20px; font-size:11px; letter-spacing: 0.1em;">SYSTEM LEDGER VACANT</div>`;
+    todoContainer.innerHTML = `<div style="text-align:center; color:rgba(13,13,13,0.3); padding:20px; font-size:11px; letter-spacing: 0.1em;">SYSTEM LEDGER VACANT</div>`;
     renderProductivityBanner();
     saveState();
     return;
@@ -1201,7 +1265,7 @@ function renderTaskLedger() {
       </div>
       <div class="task-actions">
         ${!task.isComplete ? `
-          <button class="btn session-toggle-btn" style="padding: 5px 10px; font-size: 10px; ${task.sessionActive ? 'background:linear-gradient(90deg,#8a0000,#c21a1a);' : ''}">${sessionBtnLabel}</button>
+          <button class="btn session-toggle-btn" style="padding: 5px 10px; font-size: 10px; ${task.sessionActive ? 'background:var(--b1);color:var(--cream);' : ''}">${sessionBtnLabel}</button>
         ` : ''}
         ${task.isComplete ? `
           <label class="checkbox-container">
@@ -1353,7 +1417,7 @@ function startCardDrag(e, card, startX, startY) {
   ghost.style.margin = '0';
   ghost.style.zIndex = '9999';
   ghost.style.pointerEvents = 'none';
-  ghost.style.boxShadow = '0 10px 40px rgba(0,218,240,0.5)';
+  ghost.style.boxShadow = '0 6px 0 rgba(13,13,13,0.4)';
   ghost.style.transform = 'scale(1.03)';
   document.body.appendChild(ghost);
 
