@@ -644,6 +644,7 @@
   max-width: 320px;
   margin: 0.35rem 0 1.5rem 2rem;
   text-decoration: none;
+  cursor: pointer;
   transition: transform 0.25s ease, filter 0.25s ease;
 }
 
@@ -681,7 +682,34 @@
 .collage-grid img:nth-child(3) { grid-column: 3 / 4; grid-row: 2 / 3; }
 .collage-grid img:nth-child(4) { grid-column: 4 / 5; grid-row: 2 / 3; }
 .collage-grid img:nth-child(5) { grid-column: 1 / 2; grid-row: 3 / 4; }
-.collage-grid img:nth-child(6) { grid-column: 2 / 4; grid-row: 3 / 4; }
+.collage-grid img:nth-child(6) { grid-column: 2 / 5; grid-row: 3 / 4; }
+
+/* A full-card hover cue: the whole collage is one <a>, this just makes
+   that obvious wherever the pointer lands, not only over the ribbon. */
+.collage-hover-cta {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 13, 13, 0.72);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.games-collage:hover .collage-hover-cta,
+.games-collage:focus-visible .collage-hover-cta { opacity: 1; }
+
+.collage-hover-cta span {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cream);
+  border: 2px solid var(--cream);
+  padding: 8px 18px;
+}
 
 .collage-ribbon {
   position: absolute;
@@ -847,6 +875,131 @@
   }
 
   /* ── MUSIC ── */
+  .music-banner {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 7;
+    border: 4px solid var(--b4);
+    overflow: hidden;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 2rem;
+    background: var(--b4);
+    transition: filter 0.25s ease;
+  }
+
+  .music-banner-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 18%;
+    transition: transform 0.3s ease;
+  }
+
+  .music-banner:hover .music-banner-photo { transform: scale(1.04); }
+
+  .music-banner-ribbon {
+    position: absolute;
+    top: 16px;
+    left: -40px;
+    width: 190px;
+    transform: rotate(-45deg);
+    background: var(--b1);
+    color: var(--cream);
+    text-align: center;
+    padding: 4px 0;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    z-index: 3;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+    animation: collageRibbonPulse 3s ease-in-out infinite;
+  }
+
+  .music-banner-lower {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    align-items: stretch;
+    max-width: 92%;
+    z-index: 2;
+  }
+
+  .music-banner-lt-accent {
+    width: 7px;
+    background: repeating-linear-gradient(-45deg, var(--b1) 0 7px, var(--b2) 7px 14px, var(--b3) 14px 21px);
+    flex-shrink: 0;
+  }
+
+  .music-banner-lt-text {
+    background: rgba(13,13,13,0.88);
+    color: var(--cream);
+    padding: 8px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .music-banner-lt-text strong {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+  }
+
+  .music-banner-lt-text span {
+    font-size: 10px;
+    letter-spacing: 0.03em;
+    color: #ccc;
+  }
+
+  .music-banner-chip {
+    position: absolute;
+    bottom: -16px;
+    right: 16px;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    border: 3px solid var(--cream);
+    outline: 3px solid var(--b4);
+    object-fit: cover;
+    transform: rotate(-6deg);
+    z-index: 4;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.35);
+  }
+
+  .music-banner-cta {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(13, 13, 13, 0.72);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .music-banner:hover .music-banner-cta,
+  .music-banner:focus-visible .music-banner-cta { opacity: 1; }
+
+  .music-banner-cta span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border: 2px solid var(--cream);
+    padding: 8px 18px;
+  }
+
+  @media (max-width: 600px) {
+    .music-banner { aspect-ratio: 4 / 3; }
+  }
+
   .music-platforms {
     display: flex;
     flex-wrap: wrap;
@@ -1054,6 +1207,7 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#games">Games</a></li>
+      <li><a href="music.html">Music</a></li>
       <li><a href="vr-ar.html">VR &amp; AR</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -1142,6 +1296,7 @@ Regardless of medium, my approach remains the same: understand the system, simpl
       <a href="skills/index.html?id=video-vfx" class="skill-block">Video & VFX</a>
       <a href="games.html" class="skill-block">Game development</a>
       <a href="vr-ar.html" class="skill-block">AR / VR Development</a>
+      <a href="music.html" class="skill-block">Music Production</a>
     </div>
   </div>
 
@@ -1200,6 +1355,7 @@ Regardless of medium, my approach remains the same: understand the system, simpl
               <span>Gang-war simulation, 8 months deep</span>
             </div>
           </div>
+          <div class="collage-hover-cta"><span>View Full Dev Journal →</span></div>
         </div>
         <img class="collage-chip" src="public/blog/lyari/shashking-portrait.jpg" alt="shashKing">
       </a>
@@ -1234,6 +1390,7 @@ Regardless of medium, my approach remains the same: understand the system, simpl
         <li><span class="icon-dot b1"></span><a href="https://shashking.itch.io/" target="_blank">Visit my Itch.io →</a></li>
         <li><span class="icon-dot b3"></span><a href="games.html">See All Platforms &amp; Game of the Day →</a></li>
         <li><span class="icon-dot b2"></span><a href="vr-ar.html">VR &amp; AR Projects →</a></li>
+        <li><span class="icon-dot b1"></span><a href="music.html">Full Music Page &amp; Substack Journal →</a></li>
       </ul>
     </div>
   </div>
@@ -1312,9 +1469,23 @@ Regardless of medium, my approach remains the same: understand the system, simpl
     <h3>Find shashKing Music</h3>
     <p>
       Original tracks and a growing playlist presence, streaming across every
-      major platform.
+      major platform. <a href="music.html" style="color:var(--b3); font-weight:700;">See the full Music page &amp; Substack journal →</a>
     </p>
   </div>
+
+  <a class="music-banner" href="music.html" aria-label="See the full Music page with tracks and the Substack journal">
+    <img class="music-banner-photo" src="public/portraits/shashking-too-late.jpg" alt="shashKing in character for a music visual" loading="lazy">
+    <div class="music-banner-ribbon"><span>Now Streaming</span></div>
+    <div class="music-banner-lower">
+      <span class="music-banner-lt-accent"></span>
+      <div class="music-banner-lt-text">
+        <strong>shashKing</strong>
+        <span>Original tracks &amp; Substack journal</span>
+      </div>
+    </div>
+    <div class="music-banner-cta"><span>Open Full Music Page →</span></div>
+    <img class="music-banner-chip" src="public/blog/lyari/shashking-portrait.jpg" alt="shashKing" loading="lazy">
+  </a>
 
   <div class="music-platforms">
     <a href="https://open.spotify.com/playlist/6v1MGvO8hQFLh1eHyHjYf6" target="_blank" rel="noopener noreferrer">Spotify Playlist →</a>
